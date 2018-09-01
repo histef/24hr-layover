@@ -1,12 +1,14 @@
-import React, { Component } from 'react';
+import React, { Fragment,Component } from 'react';
+
 import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">Final Project
-      </div>
-    );
+      <Fragment>
+        <h1 className="title"><span>New Orleans</span><br />Neighborhood Map</h1>
+      </Fragment>
+    )
   }
 }
 
