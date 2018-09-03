@@ -35,9 +35,8 @@ html, body {
 }
 
 /*MAP*/
-.map {
-  margin: 50px 30px;
-  height: 500px;
+#map {
+  margin: 50px auto;
   background-color: #ddd;
 }
 
@@ -62,7 +61,8 @@ html, body {
     flex: 1;
   }
 
-  .map {
+  #map {
     flex: 2;
+    margin: 50px 30px;
   }
 }
