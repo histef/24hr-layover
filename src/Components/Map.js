@@ -2,37 +2,39 @@ import React, { Component } from 'react';
 
 class Map extends Component{
 
-  onScriptLoad = () => {
-    const map = new window.google.maps.Map(
-      document.getElementById(this.props.id), this.props.options);
+
+  componentDidMount(){
+    this.googleChecker();
   }
 
-  componentDidMount() {
-    if (!window.google) {
-      var s = document.createElement('script');
-      s.type = 'text/javascript';
-      s.src = `https://maps.google.com/maps/api/js?key=${API_key}`;
-      var x = document.getElementsByTagName('script')[0];
-      x.parentNode.insertBefore(s, x);
-
-      s.addEventListener('load', e => {
-        this.onScriptLoad()
-      })
+  googleChecker = () => {
+    //check if google maps API is ready to use
+    if(!window.google) {
+      console.error("Google API did not load yet");
     } else {
-      this.onScriptLoad()
+      //google maps API is ready, so render the map
+      this.initMap();
     }
   }
 
-  render() {
-    return (
-      <div
-      style={{ width: '75vw', height: 500 }}
-      id={this.props.id}
-      />
+  initMap = () => {
+    const options = {
+      zoom: 13,
+      center: {lat: 29.9511,lng: -90.0715}
+    }
+    // create map instance
+    new window.google.maps.Map(this.mapContainer, options)
+  }
+
+  render(){
+    return(
+        <div
+          style={{ width: '75vw', height: 500 }}
+          id="map"
+          ref={div => {this.mapContainer = div}}>
+      </div>
     );
   }
 }
-
-const API_key = 'AIzaSyBYV5RDub92s1e3C9qL3nWNzNwjpokvpW0';
 
 export default Map
