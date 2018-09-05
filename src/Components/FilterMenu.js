@@ -1,11 +1,25 @@
 import React from 'react';
 
-function FilterMenu(props){
+function FilterMenu(props) {
   return (
+
     <div className='filter-menu'>
-      <h2>Filter Menu</h2>
+      <div className='filter-header'>
+        <h2>Filter Menu</h2>
+        <button className="icon" onClick={props.responsiveFilterMenu}>
+          {
+            props.filterMenuIsOpen
+            ? <i className="fas fa-bars"></i>
+            : <i className="fas fa-times"></i>
+          }
+        </button>
+      </div>
       <div className='dropdown'>
-        stuff <br /> more
+        <p>DROP-DOWN MENU</p>
+        <div className='dd-results'>
+          <p>place a</p>
+          <p>place b</p>
+        </div>
       </div>
     </div>
   )
@@ -14,4 +28,4 @@ function FilterMenu(props){
 export default FilterMenu
 
 // TODO: dropdown Menu
-// TODO: grab the markers
+// TODO: grab the markers/infowindows

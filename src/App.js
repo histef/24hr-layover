@@ -5,19 +5,29 @@ import Map from './Components/Map'
 import './App.css'
 
 class App extends Component {
+  state = {
+    filterMenuIsOpen: true
+  }
+
+  responsiveFilterMenu = () => {
+    this.setState(currentState => ({
+      filterMenuIsOpen: !currentState.filterMenuIsOpen
+    }))
+    console.log(this.state.filterMenuIsOpen)
+  }
+
   render() {
     return (
       <Fragment>
-        <h1 className="title"><span>New Orleans</span><br />Neighborhood Map</h1>
+        <header>
+          <h1 className="title"><span>New Orleans</span><br />Neighborhood Map</h1>
+        </header>
         <div className="wrapper">
-          <FilterMenu />
-          <Map
-            id='map'
-            options={{
-              center: {lat: 29.9511, lng: -90.0715},
-              zoom: 13
-              }}
+          <FilterMenu
+            filterMenuIsOpen={this.state.filterMenuIsOpen}
+            responsiveFilterMenu={this.responsiveFilterMenu}
           />
+          <Map />
         </div>
       </Fragment>
     )
