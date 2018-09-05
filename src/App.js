@@ -9,7 +9,7 @@ class App extends Component {
     filterMenuIsOpen: true
   }
 
-  responsiveFilterMenu = () => {
+  toggleFilterMenu = () => {
     this.setState(currentState => ({
       filterMenuIsOpen: !currentState.filterMenuIsOpen
     }))
@@ -25,7 +25,7 @@ class App extends Component {
         <div className="wrapper">
           <FilterMenu
             filterMenuIsOpen={this.state.filterMenuIsOpen}
-            responsiveFilterMenu={this.responsiveFilterMenu}
+            onToggleFilterMenu={this.toggleFilterMenu}
           />
           <Map />
         </div>
