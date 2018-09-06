@@ -1,13 +1,12 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 function FilterMenu(props) {
 
 
     if (props.screenWidth > 770 && props.filterMenuIsOpen === false) {
       return (
-
-        <div className='filter-menu' style={{ position: 'fixed', top: 191, width: 45, height: 45, backgroundColor: '#e6ac00' }}>
-          <button className="icon" onClick={props.onToggleFilterMenu}>
+        <div className='filter-menu' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',position: 'fixed', top: 191, width: 45, height: 29, backgroundColor: '#e6ac00'}}>
+          <button className="icon"  onClick={props.onToggleFilterMenu}>
             {
               props.filterMenuIsOpen
               ? <i className="fas fa-times"></i>
@@ -17,24 +16,28 @@ function FilterMenu(props) {
         </div>
       )
 
-    } else if (props.screenWidth < 770 && props.filterMenuIsOpen === false) {
+    }
+
+    else if (props.screenWidth < 770 && props.filterMenuIsOpen === false) {
       return (
-        <Fragment>
-        <div className='filter-header'>
-          <h2>Filter Menu</h2>
-          <button className="icon" onClick={props.onToggleFilterMenu}>
-            {
-              props.filterMenuIsOpen
-              ? <i className="fas fa-times"></i>
-              : <i className="fas fa-bars"></i>
-            }
-          </button>
+        <div className='filter-menu'>
+          <div className='filter-header'>
+            <h2>Filter Menu</h2>
+            <button className="icon" onClick={props.onToggleFilterMenu}>
+              {
+                props.filterMenuIsOpen
+                ? <i className="fas fa-times"></i>
+                : <i className="fas fa-bars"></i>
+              }
+            </button>
+          </div>
+          <div className='dropdown' style={{ display: 'none' }}>
+          </div>
         </div>
-        <div className='dropdown' style={{ display: 'none' }}>
-        </div>
-        </Fragment>
       )
-    } else {
+    }
+
+    else {
       return (
         <div className='filter-menu'>
         <div className='filter-header'>
