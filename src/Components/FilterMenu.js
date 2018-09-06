@@ -2,7 +2,7 @@ import React from 'react';
 
 function FilterMenu(props) {
 
-
+    //handles closed filter menu layout for larger screens
     if (props.screenWidth > 770 && props.filterMenuIsOpen === false) {
       return (
         <div className='filter-menu' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',position: 'fixed', top: 191, width: 45, height: 29, backgroundColor: '#e6ac00'}}>
@@ -18,6 +18,7 @@ function FilterMenu(props) {
 
     }
 
+    //handles closed filter menu layout for smaller screens
     else if (props.screenWidth < 770 && props.filterMenuIsOpen === false) {
       return (
         <div className='filter-menu'>
@@ -37,6 +38,7 @@ function FilterMenu(props) {
       )
     }
 
+    //open filter menu layout
     else {
       return (
         <div className='filter-menu'>
@@ -66,4 +68,3 @@ export default FilterMenu
 
 // TODO: dropdown Menu
 // TODO: grab the markers/infowindows
-// TODO: how to check width than either display: none or transition postiion to -45px;
