@@ -6,14 +6,29 @@ import './App.css'
 
 class App extends Component {
   state = {
-    filterMenuIsOpen: true
+    filterMenuIsOpen: true,
+    getWidth: window.innerWidth
+  }
+
+  componentDidMount = () => {
+    // this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+    this.updateWindowDimensions();
+    }
+
+  componentWillUnmount = () => {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions = () => {
+    this.setState({ getWidth: window.innerWidth });
+    console.log(this.state.getWidth)
   }
 
   toggleFilterMenu = () => {
     this.setState(currentState => ({
       filterMenuIsOpen: !currentState.filterMenuIsOpen
     }))
-    console.log(this.state.filterMenuIsOpen)
   }
 
   render() {
@@ -26,6 +41,7 @@ class App extends Component {
           <FilterMenu
             filterMenuIsOpen={this.state.filterMenuIsOpen}
             onToggleFilterMenu={this.toggleFilterMenu}
+            screenWidth={this.state.getWidth}
           />
           <Map />
         </div>
