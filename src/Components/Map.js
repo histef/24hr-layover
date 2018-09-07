@@ -32,14 +32,14 @@ class Map extends Component{
     this.props.locations.map(location => {
       let position = location.location;
       let title = location.title;
-      let idCount = 0;
+      let id = location.id;
 
       marker = new window.google.maps.Marker({
       map,
       position,
       title,
       animation: window.google.maps.Animation.DROP,
-      id: idCount++
+      id
       });
     })
 

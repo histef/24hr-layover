@@ -1,20 +1,24 @@
 import React, { Fragment,Component } from 'react'
+import escapeRegExp from 'escape-string-regexp'
 
 import FilterMenu from './Components/FilterMenu.js'
 import Map from './Components/Map'
 import './App.css'
 
+  const locations = [
+    {title: 'Bacchanal Fine Wine & Spirits', location: {lat: 29.9598,lng: -90.0332}, id: 0},
+    {title: 'Bourbon Street', location: {lat: 29.9590,lng: -90.0652}, id: 1},
+    {title: 'Lafayette Cemetery No. 1', location: {lat: 29.9288,lng: -90.0854}, id: 2},
+    {title: 'Cafe Du Monde', location: {lat: 29.9574,lng: -90.0618}, id: 3},
+    {title: 'Ace Hotel', location: {lat: 29.9483,lng: -90.0719}, id: 4},
+  ]
+
 class App extends Component {
   state = {
-    locations: [
-    {title: 'Bacchanal Fine Wine & Spirits', location: {lat: 29.9598,lng: -90.0332}},
-    {title: 'Bourbon Street', location: {lat: 29.9590,lng: -90.0652}},
-    {title: 'Lafayette Cemetery No. 1', location: {lat: 29.9288,lng: -90.0854}},
-    {title: 'Cafe Du Monde', location: {lat: 29.9574,lng: -90.0618}},
-    {title: 'Ace Hotel', location: {lat: 29.9483,lng: -90.0719}},
-  ],
     filterMenuIsOpen: true,
-    getWidth: window.innerWidth
+    getWidth: window.innerWidth,
+    searchfield: '',
+    showLocations: [...locations]
   }
 
   componentDidMount = () => {
@@ -36,7 +40,22 @@ class App extends Component {
     }))
   }
 
+  handleSearch = search => {
+    this.setState({ searchfield: search })
+  }
+
+  getLocations = () => {
+    if (this.state.searchfield){
+      const match = new RegExp(escapeRegExp(this.state.searchfield), 'i')
+      this.setState({ showLocations: locations.filter(location=>match.test(location.title)) })
+    } else {
+      this.setState({ showLocations: locations })
+    }
+    console.log(this.state.showLocations);
+  }
+
   render() {
+
     return (
       <Fragment>
         <header>
@@ -47,8 +66,12 @@ class App extends Component {
             filterMenuIsOpen={this.state.filterMenuIsOpen}
             onToggleFilterMenu={this.toggleFilterMenu}
             screenWidth={this.state.getWidth}
+            onHandleSearch={this.handleSearch}
+            value={this.state.searchfield}
+            onGetLocations={this.getLocations}
+            showLocations={this.state.showLocations}
           />
-          <Map locations={this.state.locations}/>
+          <Map locations={locations}/>
         </div>
       </Fragment>
     )
