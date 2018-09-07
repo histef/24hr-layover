@@ -1,4 +1,5 @@
 import React from 'react';
+import SearchField from './SearchField'
 import ListView from './ListView'
 
 function FilterMenu(props) {
@@ -52,6 +53,7 @@ function FilterMenu(props) {
             }
           </button>
         </div>
+          <SearchField />
           <ListView
             locations={props.locations}
           />
