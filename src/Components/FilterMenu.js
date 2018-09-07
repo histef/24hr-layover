@@ -1,4 +1,5 @@
 import React from 'react';
+import ListView from './ListView'
 
 function FilterMenu(props) {
 
@@ -32,11 +33,10 @@ function FilterMenu(props) {
               }
             </button>
           </div>
-          <div className='dropdown' style={{ display: 'none' }}>
-          </div>
         </div>
       )
     }
+
 
     //open filter menu layout
     else {
@@ -52,13 +52,9 @@ function FilterMenu(props) {
             }
           </button>
         </div>
-          <div className='dropdown'>
-              <p>DROP-DOWN MENU</p>
-              <div className='dd-results'>
-                <p>place a</p>
-                <p>place b</p>
-              </div>
-            </div>
+          <ListView
+            locations={props.locations}
+          />
         </div>
       )
     }
@@ -68,3 +64,14 @@ export default FilterMenu
 
 // TODO: dropdown Menu
 // TODO: grab the markers/infowindows
+
+        // import Dropdown from './Dropdown'
+
+        //in the else if: <div className='dropdown' style={{ display: 'none' }}></div>
+
+          // <Dropdown
+          //   className='dropdown'
+          //   locations={props.locations}
+          //   DDListIsOpen={props.DDListIsOpen}
+          //   onToggleDropdown={props.onToggleDropdown}
+          // />
