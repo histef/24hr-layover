@@ -6,12 +6,18 @@ import './App.css'
 
 class App extends Component {
   state = {
+    locations: [
+    {title: 'Bacchanal Fine Wine & Spirits', location: {lat: 29.9598,lng: -90.0332}},
+    {title: 'Bourbon Street', location: {lat: 29.9590,lng: -90.0652}},
+    {title: 'Lafayette Cemetery No. 1', location: {lat: 29.9288,lng: -90.0854}},
+    {title: 'Cafe Du Monde', location: {lat: 29.9574,lng: -90.0618}},
+    {title: 'Ace Hotel', location: {lat: 29.9483,lng: -90.0719}},
+  ],
     filterMenuIsOpen: true,
     getWidth: window.innerWidth
   }
 
   componentDidMount = () => {
-    // this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
     this.updateWindowDimensions();
     }
@@ -22,7 +28,6 @@ class App extends Component {
 
   updateWindowDimensions = () => {
     this.setState({ getWidth: window.innerWidth });
-    console.log(this.state.getWidth)
   }
 
   toggleFilterMenu = () => {
@@ -43,7 +48,7 @@ class App extends Component {
             onToggleFilterMenu={this.toggleFilterMenu}
             screenWidth={this.state.getWidth}
           />
-          <Map />
+          <Map locations={this.state.locations}/>
         </div>
       </Fragment>
     )

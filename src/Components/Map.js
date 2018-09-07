@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 
-class Map extends Component{
+  let markers = []
+  let marker;
+  let map;
 
+
+class Map extends Component{
 
   componentDidMount(){
     this.googleChecker();
   }
 
+  //check if google maps API is ready to use
   googleChecker = () => {
-    //check if google maps API is ready to use
     if(!window.google) {
       console.error("Google API did not load yet");
     } else {
@@ -20,10 +24,26 @@ class Map extends Component{
   initMap = () => {
     const options = {
       zoom: 13,
-      center: {lat: 29.9511,lng: -90.0715}
+      center: {lat: 29.9511,lng: -90.0600}
     }
     // create map instance
-    new window.google.maps.Map(this.mapContainer, options)
+    map = new window.google.maps.Map(this.mapContainer, options)
+
+    this.props.locations.map(location => {
+      let position = location.location;
+      let title = location.title;
+      let idCount = 0;
+
+      marker = new window.google.maps.Marker({
+      map,
+      position,
+      title,
+      animation: window.google.maps.Animation.DROP,
+      id: idCount++
+      });
+    })
+
+      markers.push(marker);
   }
 
   render(){
@@ -38,3 +58,11 @@ class Map extends Component{
 }
 
 export default Map
+
+
+//TODO:
+  //child component Marker
+  //pass map variable to add Marker to
+  //do map here to create a list of markers
+  //assign state Markers array here...
+  //then we can change the state depending on user's dd menu choice
