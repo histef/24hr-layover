@@ -8,7 +8,7 @@ function SearchField(props){
               type="text"
               placeholder="Search location"
               value={props.value}
-              onChange={(event) => {props.onHandleSearch(event.target.value); props.onGetLocations()}}
+              onChange={(event) => props.onUpdateSearch(event.target.value)}
             />
       </form>
     </Fragment>

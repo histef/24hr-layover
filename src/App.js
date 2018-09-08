@@ -40,13 +40,14 @@ class App extends Component {
     }))
   }
 
-  handleSearch = search => {
+  updateSearch = search => {
     this.setState({ searchfield: search })
+    this.getLocations(search)
   }
 
-  getLocations = () => {
-    if (this.state.searchfield){
-      const match = new RegExp(escapeRegExp(this.state.searchfield), 'i')
+  getLocations = (search) => {
+    if (search){
+      const match = new RegExp(escapeRegExp(search), 'i')
       this.setState({ showLocations: locations.filter(location=>match.test(location.title)) })
     } else {
       this.setState({ showLocations: locations })
@@ -66,7 +67,7 @@ class App extends Component {
             filterMenuIsOpen={this.state.filterMenuIsOpen}
             onToggleFilterMenu={this.toggleFilterMenu}
             screenWidth={this.state.getWidth}
-            onHandleSearch={this.handleSearch}
+            onUpdateSearch={this.updateSearch}
             value={this.state.searchfield}
             onGetLocations={this.getLocations}
             showLocations={this.state.showLocations}

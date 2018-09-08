@@ -53,9 +53,14 @@ function FilterMenu(props) {
             }
           </button>
         </div>
-          <SearchField />
+          <SearchField
+            onUpdateSearch={props.onUpdateSearch}
+            onGetLocations={props.onGetLocations}
+            value={props.value}
+          />
           <ListView
-            locations={props.locations}
+            value={props.value}
+            showLocations={props.showLocations}
           />
         </div>
       )
@@ -64,16 +69,4 @@ function FilterMenu(props) {
 
 export default FilterMenu
 
-// TODO: dropdown Menu
 // TODO: grab the markers/infowindows
-
-        // import Dropdown from './Dropdown'
-
-        //in the else if: <div className='dropdown' style={{ display: 'none' }}></div>
-
-          // <Dropdown
-          //   className='dropdown'
-          //   locations={props.locations}
-          //   DDListIsOpen={props.DDListIsOpen}
-          //   onToggleDropdown={props.onToggleDropdown}
-          // />
