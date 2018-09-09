@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
-  let markers = []
-  let marker;
-  let map;
-
+let marker;
+let map;
+let markers = [];
 
 class Map extends Component{
 
@@ -18,6 +17,7 @@ class Map extends Component{
     } else {
       //google maps API is ready, so render the map
       this.initMap();
+
     }
   }
 
@@ -29,21 +29,36 @@ class Map extends Component{
     // create map instance
     map = new window.google.maps.Map(this.mapContainer, options)
 
-    this.props.locations.map(location => {
+    //for each location, create marker and add animation event
+    this.props.locations.forEach(location => {
       let position = location.location;
       let title = location.title;
       let id = location.id;
 
+      //creates each marker
       marker = new window.google.maps.Marker({
       map,
       position,
       title,
       animation: window.google.maps.Animation.DROP,
       id
-      });
-    })
+      })
 
-      markers.push(marker);
+      markers.push(marker)
+
+      this.animateMarker();
+    })
+      // this.setState({ markers: this.state.markers.push(marker) })
+  }
+
+  animateMarker= () => {
+      marker.addListener('click', function(){
+         if (this.getAnimation() !== null) {
+            this.setAnimation(null);
+          } else {
+            this.setAnimation(window.google.maps.Animation.BOUNCE);
+          }
+    })
   }
 
   render(){
