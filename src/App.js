@@ -62,14 +62,13 @@ class App extends Component {
     // console.log('chosen loc working:' + this.state.chosenLocation)
   }
 
-  getMarkers = (fromMap) => {
-    this.setState(prevState=>{
-      markers: prevState.markers.push(fromMap)
-    })
+  getMarkers = (markersFromMap) => {
+    this.setState({ markers: markersFromMap })
   }
 
   animateMarkerFromList = e => {
     let selectedMarker = this.state.markers[e.target.id];
+
 
     if (e.target.id) {
       this.animateMarker(selectedMarker)
@@ -84,7 +83,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.markers)
+
     return (
       <Fragment>
         <header>

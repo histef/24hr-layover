@@ -35,7 +35,7 @@ class Map extends Component{
     map = new window.google.maps.Map(this.mapContainer, options)
 
     //for each location, create marker and add animation event
-    this.props.locations.map(location => {
+    let newMarkers = this.props.locations.map(location => {
       let position = location.location;
       let title = location.title;
       let id = location.id;
@@ -49,12 +49,15 @@ class Map extends Component{
       id
       })
 
-      //update marker array in App.js
-      this.props.getMarkers(marker)
+      //animate marker when clicked on, must go before return value to add the listener to each marker
+      this.animateClickedMarker(marker);
 
-      //animate marker when clicked on
-      this.animateClickedMarker();
+      //must return a value: array-callback-return
+      return marker;
     })
+
+          //update marker array in App.js
+      this.props.getMarkers(newMarkers)
   }
 
   animateClickedMarker= () => {
