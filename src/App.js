@@ -18,7 +18,9 @@ class App extends Component {
     filterMenuIsOpen: true,
     getWidth: window.innerWidth,
     searchfield: '',
-    showLocations: [...locations]
+    showLocations: [...locations],
+    chosenLocation: 0,
+    markers: []
   }
 
   componentDidMount = () => {
@@ -55,8 +57,34 @@ class App extends Component {
     console.log(this.state.showLocations);
   }
 
-  render() {
+  updateChosenLocation = (id) => {
+    this.setState({ chosenLocation: id})
+    // console.log('chosen loc working:' + this.state.chosenLocation)
+  }
 
+  getMarkers = (fromMap) => {
+    this.setState(prevState=>{
+      markers: prevState.markers.push(fromMap)
+    })
+  }
+
+  animateMarkerFromList = e => {
+    let selectedMarker = this.state.markers[e.target.id];
+
+    if (e.target.id) {
+      this.animateMarker(selectedMarker)
+    }
+  }
+
+  animateMarker = (marker) => {
+    marker.setAnimation(window.google.maps.Animation.BOUNCE);
+    setTimeout(() => {
+      marker.setAnimation(null);
+    }, 1500);
+  }
+
+  render() {
+    console.log(this.state.markers)
     return (
       <Fragment>
         <header>
@@ -71,8 +99,16 @@ class App extends Component {
             value={this.state.searchfield}
             onGetLocations={this.getLocations}
             showLocations={this.state.showLocations}
+            updateChosenLocation={this.updateChosenLocation}
+            markers={this.state.markers}
+            animateMarker={this.animateMarkerFromList}
           />
-          <Map locations={locations}/>
+          <Map
+            locations={locations}
+            chosenLocation={this.state.chosenLocation}
+            getMarkers={this.getMarkers}
+            animateMarker={this.animateMarker}
+          />
         </div>
       </Fragment>
     )

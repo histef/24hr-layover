@@ -2,13 +2,19 @@ import React, { Component } from 'react';
 
 let marker;
 let map;
-let markers = [];
 
 class Map extends Component{
 
   componentDidMount(){
-    this.googleChecker();
+    this.googleChecker()
   }
+
+// componentDidUpdate(prevProps, prevState) {
+//   // only update chart if the data has changed
+//   if (prevProps.chosenLocation !== this.props.chosenLocation) {
+//      this.state.markers[this.props.chosenLocation].setAnimation(window.google.maps.Animation.BOUNCE)
+//   }
+// }
 
   //check if google maps API is ready to use
   googleChecker = () => {
@@ -17,7 +23,6 @@ class Map extends Component{
     } else {
       //google maps API is ready, so render the map
       this.initMap();
-
     }
   }
 
@@ -30,7 +35,7 @@ class Map extends Component{
     map = new window.google.maps.Map(this.mapContainer, options)
 
     //for each location, create marker and add animation event
-    this.props.locations.forEach(location => {
+    this.props.locations.map(location => {
       let position = location.location;
       let title = location.title;
       let id = location.id;
@@ -44,20 +49,20 @@ class Map extends Component{
       id
       })
 
-      markers.push(marker)
+      //update marker array in App.js
+      this.props.getMarkers(marker)
 
-      this.animateMarker();
+      //animate marker when clicked on
+      this.animateClickedMarker();
     })
-      // this.setState({ markers: this.state.markers.push(marker) })
   }
 
-  animateMarker= () => {
-      marker.addListener('click', function(){
-         if (this.getAnimation() !== null) {
-            this.setAnimation(null);
-          } else {
-            this.setAnimation(window.google.maps.Animation.BOUNCE);
-          }
+  animateClickedMarker= () => {
+    marker.addListener('click', function(){
+      this.setAnimation(window.google.maps.Animation.BOUNCE);
+      setTimeout(() => {
+        this.setAnimation(null);
+      }, 1500);
     })
   }
 

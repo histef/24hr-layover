@@ -61,6 +61,9 @@ function FilterMenu(props) {
           <ListView
             value={props.value}
             showLocations={props.showLocations}
+            updateChosenLocation={props.updateChosenLocation}
+            markers={props.markers}
+            animateMarker={props.animateMarker}
           />
         </div>
       )
