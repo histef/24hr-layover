@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 let marker;
 let map;
+let infowindow;
 
 class Map extends Component{
 
@@ -49,23 +50,29 @@ class Map extends Component{
       id
       })
 
+      infowindow = new window.google.maps.InfoWindow({
+        content: `${title}`
+      });
+
       //animate marker when clicked on, must go before return value to add the listener to each marker
-      this.animateClickedMarker(marker);
+      this.animateClickedMarker(marker, infowindow);
 
       //must return a value: array-callback-return
       return marker;
+
     })
 
           //update marker array in App.js
       this.props.getMarkers(newMarkers)
   }
 
-  animateClickedMarker= () => {
-    marker.addListener('click', function(){
+  animateClickedMarker = (clickedMarker, correspondingInfoWindow) => {
+    clickedMarker.addListener('click', function(){
       this.setAnimation(window.google.maps.Animation.BOUNCE);
       setTimeout(() => {
         this.setAnimation(null);
       }, 1500);
+      correspondingInfoWindow.open(map, clickedMarker);
     })
   }
 
@@ -83,9 +90,8 @@ class Map extends Component{
 export default Map
 
 
-//TODO:
-  //child component Marker
-  //pass map variable to add Marker to
-  //do map here to create a list of markers
-  //assign state Markers array here...
-  //then we can change the state depending on user's dd menu choice
+//TODO
+  //infowindow
+  //fetch foursquare data and use to create infowindow content.but need
+  // to pass to list item too...so maybe foursquare info should be in app.js
+  // looks like data gets passed to state using setstate in promise.

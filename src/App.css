@@ -19,6 +19,10 @@ html, body {
   font-size: 1.7em;
 }
 
+.wrapper {
+  height: 100%;
+}
+
 /*FILTER-MENU*/
 .filter-menu {
   margin: 0;
@@ -75,6 +79,16 @@ form input {
   font-size: 1em;
 }
 
+/*FOURSQUARE COMPONENT*/
+.foursquare-info {
+  background-color: white;
+  color: black;
+  padding: 10px;
+  margin: 5px;
+  box-shadow: 4px 7px 5px #888888;
+  /*display: none;*/
+}
+
 /*MEDIA QUERIES*/
 @media screen and (min-width: 350px) {
   .title {
@@ -96,9 +110,6 @@ form input {
     flex: 1;
   }
 
-  .list {
-    height: 100vh;
-  }
   #map {
     flex: 2;
     margin: 50px 50px;

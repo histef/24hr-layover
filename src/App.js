@@ -1,5 +1,6 @@
 import React, { Fragment,Component } from 'react'
 import escapeRegExp from 'escape-string-regexp'
+import axios from 'axios';
 
 import FilterMenu from './Components/FilterMenu.js'
 import Map from './Components/Map'
@@ -7,10 +8,11 @@ import './App.css'
 
   const locations = [
     {title: 'Bacchanal Fine Wine & Spirits', location: {lat: 29.9598,lng: -90.0332}, id: 0},
-    {title: 'Bourbon Street', location: {lat: 29.9590,lng: -90.0652}, id: 1},
+    {title: 'Bourbon Street', location: {lat: 29.9540,lng: -90.0698}, id: 1},
     {title: 'Lafayette Cemetery No. 1', location: {lat: 29.9288,lng: -90.0854}, id: 2},
     {title: 'Cafe Du Monde', location: {lat: 29.9574,lng: -90.0618}, id: 3},
     {title: 'Ace Hotel', location: {lat: 29.9483,lng: -90.0719}, id: 4},
+    {title: 'Preservation Hall', location: {lat: 29.9583,lng: -90.0654}, id: 5}
   ]
 
 class App extends Component {
@@ -20,10 +22,20 @@ class App extends Component {
     searchfield: '',
     showLocations: [...locations],
     chosenLocation: 0,
-    markers: []
+    markers: [],
+    axiosTest: []
   }
 
   componentDidMount = () => {
+    axios.get( `https://jsonplaceholder.typicode.com/posts/1`/*, {params: {
+      id: KEY
+    }} */ )
+      .then(response => {
+        // console.log(response);
+        this.setState({ axiosTest: response.data });
+      })
+      .catch(error => console.log(error))
+
     window.addEventListener('resize', this.updateWindowDimensions);
     this.updateWindowDimensions();
     }
@@ -54,7 +66,7 @@ class App extends Component {
     } else {
       this.setState({ showLocations: locations })
     }
-    console.log(this.state.showLocations);
+    // console.log(this.state.showLocations);
   }
 
   updateChosenLocation = (id) => {
@@ -69,7 +81,6 @@ class App extends Component {
   animateMarkerFromList = e => {
     let selectedMarker = this.state.markers[e.target.id];
 
-
     if (e.target.id) {
       this.animateMarker(selectedMarker)
     }
@@ -83,6 +94,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.axiosTest);
 
     return (
       <Fragment>
@@ -101,6 +113,7 @@ class App extends Component {
             updateChosenLocation={this.updateChosenLocation}
             markers={this.state.markers}
             animateMarker={this.animateMarkerFromList}
+            foursquareData={this.state.axiosTest}
           />
           <Map
             locations={locations}

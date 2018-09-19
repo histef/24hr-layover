@@ -17,7 +17,6 @@ function FilterMenu(props) {
           </button>
         </div>
       )
-
     }
 
     //handles closed filter menu layout for smaller screens
@@ -37,7 +36,6 @@ function FilterMenu(props) {
         </div>
       )
     }
-
 
     //open filter menu layout
     else {
@@ -64,6 +62,7 @@ function FilterMenu(props) {
             updateChosenLocation={props.updateChosenLocation}
             markers={props.markers}
             animateMarker={props.animateMarker}
+            foursquareData={props.foursquareData}
           />
         </div>
       )
