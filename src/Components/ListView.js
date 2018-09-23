@@ -6,8 +6,17 @@ function ListView(props){
 let id = 0;
 let fragID = 0;
 
+      // let listItemHTML = document.querySelector('.list-item');
+      // if (listItem.style.display ==='none'){
+      //   listItemHTML.style.display === 'block';
+      // }
+      // else{
+      //   listItem.style.display === 'none';
+      // }
+            // {props.filteredDb} link to the matching foursquare data then render foursquare data
+
   return (
-    <ul className="list" onClick={props.animateMarker}
+    <ul className="list" onClick={(e)=> {props.animateMarker(e.target); props.toggleDbInfo(e.target);}}
     >
       {props.showLocations.map(location => (
         <Fragment key={fragID++}>
@@ -19,7 +28,7 @@ let fragID = 0;
             {location.title}
             <FoursquareInfo
               key={id++}
-              foursquareData={props.foursquareData}
+              filteredDb={props.filteredDb}
         />
         </li>
       </Fragment>

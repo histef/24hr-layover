@@ -62,7 +62,9 @@ function FilterMenu(props) {
             updateChosenLocation={props.updateChosenLocation}
             markers={props.markers}
             animateMarker={props.animateMarker}
-            foursquareData={props.foursquareData}
+            // foursquareData={props.foursquareData}
+            toggleDbInfo={props.toggleDbInfo}
+            filteredDb={props.filteredDb}
           />
         </div>
       )
@@ -71,4 +73,3 @@ function FilterMenu(props) {
 
 export default FilterMenu
 
-// TODO: grab the markers/infowindows
