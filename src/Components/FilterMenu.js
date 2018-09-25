@@ -62,9 +62,10 @@ function FilterMenu(props) {
             updateChosenLocation={props.updateChosenLocation}
             markers={props.markers}
             animateMarker={props.animateMarker}
-            // foursquareData={props.foursquareData}
+            foursquareDb={props.foursquareDb}
             toggleDbInfo={props.toggleDbInfo}
             filteredDb={props.filteredDb}
+            // locations={props.locations}
           />
         </div>
       )

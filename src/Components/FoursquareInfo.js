@@ -4,16 +4,19 @@ import React, { Fragment } from 'react';
 
 function FoursquareInfo(props){
 
+
+
   return (
-    <div className="foursquare-info">
+    <div className="foursquare-info show">
+
     {props.filteredDb.map(venue =>
       <Fragment>
-        <p>Phone: {venue.contact.phone}</p>
+        <p>{venue.description}</p>
+        <p>Phone: {venue.contact.formattedPhone}</p>
         <p>Rating: {venue.rating}</p>
       </Fragment>
     )}
     </div>
-
   )
 }
 

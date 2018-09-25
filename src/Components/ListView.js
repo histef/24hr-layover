@@ -6,19 +6,14 @@ function ListView(props){
 let id = 0;
 let fragID = 0;
 
-      // let listItemHTML = document.querySelector('.list-item');
-      // if (listItem.style.display ==='none'){
-      //   listItemHTML.style.display === 'block';
-      // }
-      // else{
-      //   listItem.style.display === 'none';
-      // }
-            // {props.filteredDb} link to the matching foursquare data then render foursquare data
 
   return (
     <ul className="list" onClick={(e)=> {props.animateMarker(e.target); props.toggleDbInfo(e.target);}}
     >
-      {props.showLocations.map(location => (
+      {props.showLocations.map(location => {
+        let filteredData = props.foursquareDb.filter(l => l.id === location.venueId)
+
+          return(
         <Fragment key={fragID++}>
           <li
             key={location.id}
@@ -26,15 +21,38 @@ let fragID = 0;
             className="list-item"
             >
             {location.title}
-            <FoursquareInfo
-              key={id++}
-              filteredDb={props.filteredDb}
-        />
+
+         {location.foursquareInfoIsShowing === true
+            ? <FoursquareInfo
+                key={id++}
+                filteredDb={filteredData}
+              />
+            : null
+          }
         </li>
       </Fragment>
-      ))}
+      )})}
     </ul>
   )
 }
 
 export default ListView
+
+         // {location.foursquareInfoIsShowing === true
+         //    ? <FoursquareInfo
+         //        key={id++}
+         //        filteredDb={props.filteredDb}
+         //      />
+         //    : null
+         //  }
+
+          // {location.foursquareInfoIsShowing === true
+         //    ? props.foursquareDb
+                  // .filter(l => l.id===location.venueId)
+                  // /map(filteredData=>(
+         //      <FoursquareInfo
+         //        key={id++}
+         //        filteredDb={props.filteredDb}
+         //      />))
+         //    : null
+         //  }
