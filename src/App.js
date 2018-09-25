@@ -6,6 +6,7 @@ import { clientId, clientSecret } from './config'
 import FilterMenu from './Components/FilterMenu.js'
 import Map from './Components/Map'
 import './App.css'
+import Footer from './Components/Footer'
 
 let venueData;
 
@@ -182,8 +183,10 @@ console.log(this.state.foursquareDb)
             chosenLocation={this.state.chosenLocation}
             getMarkers={this.getMarkers}
             animateMarker={this.animateMarker}
+            foursquareDb={this.state.foursquareDb}
           />
         </div>
+        <Footer />
       </Fragment>
     )
   }
