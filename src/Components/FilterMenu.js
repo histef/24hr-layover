@@ -7,7 +7,7 @@ function FilterMenu(props) {
     //handles closed filter menu layout for larger screens
     if (props.screenWidth > 770 && props.filterMenuIsOpen === false) {
       return (
-        <div className='filter-menu' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',position: 'fixed', top: 191, width: 45, height: 29, backgroundColor: '#e6ac00'}}>
+        <div className='filter-menu' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',position: 'fixed', top: 202, width: 45, height: 70, backgroundColor: '#e47f00'}}>
           <button className="icon"  onClick={props.onToggleFilterMenu}>
             {
               props.filterMenuIsOpen

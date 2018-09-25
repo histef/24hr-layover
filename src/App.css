@@ -1,7 +1,13 @@
+/*color palette navy:181f3b aqua#3c84ab griege#aca695 burnt yello#a6b500 orangecoral#e47f00*/
+
 html, body {
   display:grid;
-  background-color: #f0f3f4;
+  background-color: #aca695;
   height: 100%;
+}
+
+header {
+  background-color: white;
 }
 
 /*TITLE-H1*/
@@ -9,14 +15,24 @@ html, body {
   margin: 0;
   padding: 30px 0;
   background-color: white;
-  font-size: 9vw;
+  font-size: 1.3em;
   font-family: 'Montserrat', sans-serif;
   text-align: center;
+  border: 1px solid white;
+  transition: all 1s;
+}
+
+.title:hover {
+  border-radius: 50%;
+  border: 1px solid #181f3b;
+  color: #f4f3f1;
+  background-color: #181f3b;
 }
 
 .title span {
+  padding: 0;
   font-family: 'Satisfy', cursive;
-  font-size: 1.7em;
+  font-size: 2.5em;
 }
 
 .wrapper {
@@ -34,28 +50,63 @@ html, body {
 }
 
 .filter-header{
-  height: 40px;
+  height: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0;
   padding: 0 15px;
-  background-color: #e6ac00;
+  background-color: #e47f00;
+  text-transform: uppercase;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 1.3em;
 }
 
 .filter-header h2 {
   margin: 0;
-
 }
 
 .list {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  /*add a list item counter(https://www.youtube.com/watch?v=xoRbkm8XgfQ)*/
+  counter-reset: counter-name;
 }
 
 .list-item {
-  padding: 10px;
+  font-size: 1em;
+  padding: 15px 35px 15px 50px;
+  position: relative;
+}
+
+.list-item::before {
+  counter-increment: counter-name;
+  content: counter(counter-name) ' ';
+  position: absolute;
+  left: .65em;
+  top: .75em;
+  background-color: #3c84ab;
+  width: 1.5em;
+  height: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.icon {
+  padding: 3px 5px;
+  border: solid 3px #fff;
+  border-radius: 2px;
+  background-color: transparent;
+  color: white;
+  font-size: 25px;
+  transition: all 0.2s;
+}
+
+.icon:hover {
+  background-color: #3c84ab;
 }
 
 /*MAP*/
@@ -63,6 +114,7 @@ html, body {
   margin: 50px auto;
   background-color: #ddd;
 }
+
 
 
 /*SEARCHFIELD*/
@@ -86,17 +138,32 @@ form input {
   padding: 10px;
   margin: 5px;
   box-shadow: 4px 7px 5px #888888;
-  /*display: none;*/
+}
+
+/*FOOTER*/
+footer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 20px;
+  background-color:  #1a1300;
+}
+
+footer > i {
+  color: white;
+  padding: 5px;
+  margin: 5px;
+  font-size: 40px;
 }
 
 /*MEDIA QUERIES*/
-@media screen and (min-width: 350px) {
+@media screen and (min-width: 400px) {
   .title {
-    font-size: 30px;
+    font-size: 1.7em;
   }
 
   .title span {
-    font-size: 65px;
+    font-size: 2.7em;
   }
 }
 
@@ -111,7 +178,7 @@ form input {
   }
 
   #map {
-    flex: 2;
+    flex: 1;
     margin: 50px 50px;
   }
 }
