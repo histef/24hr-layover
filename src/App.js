@@ -128,34 +128,19 @@ class App extends Component {
   toggleDbInfo = (e) => {
     const index = Number(e.id);
 
-    //set the showDbInfo first so we can use this in conditional below.
-    this.showDbInfo(index);
-
-    //get the location by id number
-    let findLoc = this.state.locations.filter(location => location.id === index);
-    //returns an array so have to grab it by index 0 (they'll only be one item in array)
-    //get the FS venue id from this.state.locations array based on location id
-    //set state of filteredDbInfo with the matching fs venue's data (to pass to ListView)
-    let matchLocToDb = this.state.foursquareDb.filter(venue => {return findLoc[0].venueId === venue.id});
-    if (this.state.locations[index].foursquareInfoIsShowing === true){
-      this.setState({ filteredDbInfo: matchLocToDb });
-  }
-    // console.log(/*e, e.id,*/ index, findLoc, findLoc.venueId, matchLocToDb)
-  }
-
-  showDbInfo = (i) => {
     //copy locations array
     let locationsCopy = this.state.locations.slice();
     // change the clicked on location's foursquareInfoIsShowing
-    locationsCopy[i].foursquareInfoIsShowing = !locationsCopy[i].foursquareInfoIsShowing
+    locationsCopy[index].foursquareInfoIsShowing = !locationsCopy[index].foursquareInfoIsShowing
     // set state to new array
     this.setState({ locations: locationsCopy })
-    console.log(`getIndex ${i}`)
+    // console.log(`getIndex ${i}`)
   }
 
   render() {
 
-console.log(this.state.foursquareDb)
+    console.log(this.state.foursquareDb)
+
     return (
       <Fragment>
         <header>
@@ -175,7 +160,7 @@ console.log(this.state.foursquareDb)
             animateMarker={this.animateMarkerFromList}
             foursquareDb={this.state.foursquareDb} //DELETE these when its complete
             toggleDbInfo={this.toggleDbInfo}
-            filteredDb={this.state.filteredDbInfo}
+            // filteredDb={this.state.filteredDbInfo}
             // locations={this.state.locations}
           />
           <Map
