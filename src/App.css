@@ -2,23 +2,18 @@
 
 html, body {
   display:grid;
-  background-color: #aca695;
+  background-image: linear-gradient(white 10%, #aca695 50%);
   height: 100%;
 }
 
-header {
-  background-color: white;
-}
 
 /*TITLE-H1*/
 .title {
   margin: 0;
   padding: 30px 0;
-  background-color: white;
   font-size: 1.3em;
   font-family: 'Montserrat', sans-serif;
   text-align: center;
-  border: 1px solid white;
   transition: all 1s;
 }
 
@@ -42,11 +37,13 @@ header {
 /*FILTER-MENU*/
 .filter-menu {
   margin: 0;
-  width: 100%;
+  width: auto;
   height: 100%;
   font-family: 'Montserrat', sans-serif;
   background-color: #1a1300;
   color: white;
+  border: solid 1px #888;
+  box-shadow: 7px 10px 20px #888;
 }
 
 .filter-header{
@@ -113,6 +110,7 @@ header {
 #map {
   margin: 50px auto;
   background-color: #ddd;
+  box-shadow: 7px 10px 20px #888888;
 }
 
 
@@ -174,6 +172,7 @@ footer > i {
   }
 
   .filter-menu {
+    margin: 50px 0 50px 50px;
     flex: 1;
   }
 
