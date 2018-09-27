@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 let marker;
 let map;
 let infowindow;
+// let filteredData;
 
 class Map extends Component{
 
@@ -40,6 +41,10 @@ class Map extends Component{
       let position = location.location;
       let title = location.title;
       let id = location.id;
+      let venueId = location.venueId;
+
+            //getting the foursquare info
+      let filteredData = this.props.foursquareDb.filter(l => l.id === location.venueId)
 
       //creates each marker
       marker = new window.google.maps.Marker({
@@ -47,11 +52,14 @@ class Map extends Component{
       position,
       title,
       animation: window.google.maps.Animation.DROP,
-      id
+      id,
+      venueId
       })
 
+
       infowindow = new window.google.maps.InfoWindow({
-        content: `${title}`
+        content: `<p>${title}</p>
+                  <p>${filteredData.description}</p>`
       });
 
       //animate marker when clicked on, must go before return value to add the listener to each marker
@@ -62,7 +70,7 @@ class Map extends Component{
 
     })
 
-          //update marker array in App.js
+      //update marker array in App.js (outside of map function)
       this.props.getMarkers(newMarkers)
   }
 
@@ -73,8 +81,17 @@ class Map extends Component{
         this.setAnimation(null);
       }, 1500);
       correspondingInfoWindow.open(map, clickedMarker);
+      console.log(`animateclickedmarker ${clickedMarker.venueId}`) //it saved venueId
+      // sendToFoursquare(this);
     })
   }
+
+  sendToFoursquare = (chosenMarker) => {
+    const index = Number(chosenMarker.venueId);
+    // console.log(`send to foursquare ${chosenMarker.venueId}`)
+  }
+
+  // populateInfowindow(marker)
 
   render(){
     return(
@@ -89,9 +106,11 @@ class Map extends Component{
 
 export default Map
 
-
 //TODO
   //infowindow
   //fetch foursquare data and use to create infowindow content.but need
   // to pass to list item too...so maybe foursquare info should be in app.js
   // looks like data gets passed to state using setstate in promise.
+
+  // Resources
+  // https://stackoverflow.com/questions/33272267/google-maps-events
