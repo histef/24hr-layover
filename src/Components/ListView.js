@@ -3,7 +3,7 @@ import FoursquareInfo from './FoursquareInfo'
 
 function ListView(props){
 
-let id = 0;
+// let id = 0;
 let fragID = 0;
 
 
@@ -24,7 +24,9 @@ let fragID = 0;
 
          {location.foursquareInfoIsShowing === true
             ? <FoursquareInfo
-                key={id++}
+                className="foursquare-info"
+                // key={location.id}
+                style={{pointerEvents: 'none'}}
                 filteredDb={filteredData}
               />
             : null
