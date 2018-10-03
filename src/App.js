@@ -43,6 +43,7 @@ class App extends Component {
         id:1,
         foursquareInfoIsShowing: false
       },
+        {title: 'Lafayette Cemetery No. 1', location: {lat: 29.9288,lng: -90.0854}, venueId: '4ad4c04ef964a520d4f320e3', id:2, foursquareInfoIsShowing: false},
     ],
   }
 
@@ -87,7 +88,7 @@ class App extends Component {
       // console.log(response.data)
       addVenues.push(response.data);
       this.setState({ venues: this.state.venues.concat(response.data),
-      filteredVenues: this.state.venues.concat(response.data) })
+        filteredVenues: this.state.venues.concat(response.data) })
       })
     .catch(error => {
       alert("Error: Couldn't load data from Foursquare.");
@@ -95,9 +96,17 @@ class App extends Component {
     });
 
     return addVenues;
+
   })
+
+      // this.setState({ filteredVenues: this.state.venues.sort(function(a, b){return a.id - b.id}) })
+    // this.sortVenues();
     this.initMap();
   }
+
+  // sortVenues = () => {
+      // this.setState({ filteredVenues: this.state.venues.sort((a, b)=>a.id - b.id) })
+  // }
 
   // create the map
   initMap = () => {
@@ -185,21 +194,21 @@ class App extends Component {
   getLocations = (search) => {
     let newVenues=[];
     if (search){
-      newVenues=this.state.venues.map(venue=>{
       const match = new RegExp(escapeRegExp(search), 'i')
-
+      newVenues = this.state.venues
+      .sort( (a,b) => a.response.venue.name > b.response.venue.name)
+      .map(venue=>{
         if(match.test(venue.response.venue.name)){
           return venue;
         } else {
           return venue = null;
         }
         // return newVenues;
-        console.log(newVenues)
+        // console.log(newVenues)
       })
-
       this.setState({ filteredVenues: newVenues })
     } else {
-      this.setState({ filteredVenues: this.state.venues })
+      this.setState({ filteredVenues: this.state.venues }) //the sorted array
     }
 
     // if (search){
@@ -252,7 +261,6 @@ class App extends Component {
             foursquareDb={this.state.foursquareDb}
             toggleDbInfo={this.toggleDbInfo}
             venues={this.state.venues}
-            markers={this.state.markers}
             showMarker={this.showMarker}
           />
           <main
