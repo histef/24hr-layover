@@ -8,11 +8,8 @@ import FilterMenu from './Components/FilterMenu.js'
 import Footer from './Components/Footer'
 
 
-// const this.state.locations =
-  // {title: 'Bourbon Street', location: {lat: 29.9540,lng: -90.0698}, venueId: '4c41e11a520fa593d744caac', id:1, foursquareInfoIsShowing: false},
-  // {title: 'Lafayette Cemetery No. 1', location: {lat: 29.9288,lng: -90.0854}, venueId: '4ad4c04ef964a520d4f320e3', id:2, foursquareInfoIsShowing: false},
-  // {title: 'Cafe Du Monde', location: {lat: 29.9574,lng: -90.0618}, venueId: '4aa59477f964a520dd4820e3', id:3, foursquareInfoIsShowing: false},
-  // {title: 'Ace Hotel', location: {lat: 29.9483,lng: -90.0719}, venueId: '56c9eeeb498e242cd07bb392', id:4, foursquareInfoIsShowing: false},
+   // {title: 'Cafe Du Monde', location: {lat: 29.9574,lng: -90.0618}, venueId: '4aa59477f964a520dd4820e3', id:3, foursquareInfoIsShowing: false},
+
   // {title: 'Preservation Hall', location: {lat: 29.9583,lng: -90.0654}, venueId: '41326e00f964a520081a1fe3', id:5, foursquareInfoIsShowing: false}
 
 
@@ -29,6 +26,7 @@ class App extends Component {
     foursquareDb: [],
     filteredVenues: [],
     locations: [
+      {title: 'Ace Hotel', location: {lat: 29.9483,lng: -90.0719}, venueId: '56c9eeeb498e242cd07bb392', id:4, foursquareInfoIsShowing: false},
       {
         title: 'Bacchanal Fine Wine & Spirits',
         location: {lat: 29.9598,lng: -90.0332},
@@ -88,7 +86,8 @@ class App extends Component {
       // console.log(response.data)
       addVenues.push(response.data);
       this.setState({ venues: this.state.venues.concat(response.data),
-        filteredVenues: this.state.venues.concat(response.data) })
+        //sort filteredVenues so initial rendering is sorted alphabetically
+        filteredVenues: this.state.venues.concat(response.data).sort( (a,b) => a.response.venue.name > b.response.venue.name) })
       })
     .catch(error => {
       alert("Error: Couldn't load data from Foursquare.");
@@ -96,17 +95,10 @@ class App extends Component {
     });
 
     return addVenues;
-
   })
 
-      // this.setState({ filteredVenues: this.state.venues.sort(function(a, b){return a.id - b.id}) })
-    // this.sortVenues();
     this.initMap();
   }
-
-  // sortVenues = () => {
-      // this.setState({ filteredVenues: this.state.venues.sort((a, b)=>a.id - b.id) })
-  // }
 
   // create the map
   initMap = () => {
@@ -196,6 +188,7 @@ class App extends Component {
     if (search){
       const match = new RegExp(escapeRegExp(search), 'i')
       newVenues = this.state.venues
+      //sort this.state.venues so when users not searching anymore, list is still alphabetical
       .sort( (a,b) => a.response.venue.name > b.response.venue.name)
       .map(venue=>{
         if(match.test(venue.response.venue.name)){
@@ -203,43 +196,14 @@ class App extends Component {
         } else {
           return venue = null;
         }
-        // return newVenues;
-        // console.log(newVenues)
       })
       this.setState({ filteredVenues: newVenues })
-    } else {
-      this.setState({ filteredVenues: this.state.venues }) //the sorted array
+     } else {
+      this.setState({ filteredVenues: this.state.venues })
     }
-
-    // if (search){
-    //   const match = new RegExp(escapeRegExp(search), 'i')
-    //   this.setState({ filteredVenues: this.state.venues.filter(venue=>match.test(venue.response.venue.name)) })
-    // } else {
-    //   this.setState({ filteredVenues: this.state.venues })
-    // }
-
-    // if (match.test !=== venue.response.venue.name){
-      // this.state.venues.forEach(venue? => {
-        // if(match.test !== venue.response.venue.name){
-        //   venue = null
-        // } else {
-        //   venue = venue
-        // }
-    // find non-matching venues and change them to null, that way array length stays the same, so i can use filteredVenues then and grab the index
-    //I'm thinking a for loop... this.state.filteredVenues
-    // for(let i = 0; i < this.state.filteredVenues/venues.length; i++){
-    //   if(match.test!===venue.response.venue.name){
-    //     return null;
-    //   } else {
-    //     return venue
-      // }
-    // } use conditional if match.test===name return name else return null...
-
   }
 
   render() {
-
-    // console.log(this.state.venues)
 
     return (
       <Fragment>
