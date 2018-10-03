@@ -5,7 +5,6 @@ import { clientId, clientSecret } from './config'
 import './App.css'
 
 import FilterMenu from './Components/FilterMenu.js'
-// import Map from './Components/Map'
 import Footer from './Components/Footer'
 
 
@@ -184,46 +183,50 @@ class App extends Component {
 
   // when user is searching find matching this.state.venues, store in filteredVenues
   getLocations = (search) => {
+    let newVenues=[];
     if (search){
+      newVenues=this.state.venues.map(venue=>{
       const match = new RegExp(escapeRegExp(search), 'i')
-      this.setState({ filteredVenues: this.state.venues.filter(venue=>match.test(venue.response.venue.name)) })
+
+        if(match.test(venue.response.venue.name)){
+          return venue;
+        } else {
+          return venue = null;
+        }
+        // return newVenues;
+        console.log(newVenues)
+      })
+
+      this.setState({ filteredVenues: newVenues })
     } else {
       this.setState({ filteredVenues: this.state.venues })
     }
+
+    // if (search){
+    //   const match = new RegExp(escapeRegExp(search), 'i')
+    //   this.setState({ filteredVenues: this.state.venues.filter(venue=>match.test(venue.response.venue.name)) })
+    // } else {
+    //   this.setState({ filteredVenues: this.state.venues })
+    // }
+
+    // if (match.test !=== venue.response.venue.name){
+      // this.state.venues.forEach(venue? => {
+        // if(match.test !== venue.response.venue.name){
+        //   venue = null
+        // } else {
+        //   venue = venue
+        // }
+    // find non-matching venues and change them to null, that way array length stays the same, so i can use filteredVenues then and grab the index
+    //I'm thinking a for loop... this.state.filteredVenues
+    // for(let i = 0; i < this.state.filteredVenues/venues.length; i++){
+    //   if(match.test!===venue.response.venue.name){
+    //     return null;
+    //   } else {
+    //     return venue
+      // }
+    // } use conditional if match.test===name return name else return null...
+
   }
-
-
-  // updateChosenLocation = (id) => {
-  //   this.setState({ chosenLocation: id})
-  //   // console.log('chosen loc working:' + this.state.chosenLocation)
-  // }
-
-  // animateMarkerFromList = e => {
-  //   let selectedMarker = this.state.markers[e.id];
-
-  //   if (e) {
-  //     this.animateMarker(selectedMarker)
-  //   }
-  // }
-
-  // animateMarker = (marker) => {
-  //   marker.setAnimation(window.google.maps.Animation.BOUNCE);
-  //   setTimeout(() => {
-  //     marker.setAnimation(null);
-  //   }, 1500);
-  // }
-
-  // toggleDbInfo = (e) => {
-  //   const index = Number(e.id);
-
-  //   //copy locations array
-  //   let locationsCopy = this.state.locations.slice();
-  //   // change the clicked on location's foursquareInfoIsShowing
-  //   locationsCopy[index].foursquareInfoIsShowing = !locationsCopy[index].foursquareInfoIsShowing
-  //   // set state to new array
-  //   this.setState({ locations: locationsCopy })
-  //   // console.log(`getIndex ${i}`)
-  // }
 
   render() {
 

@@ -1,60 +1,45 @@
-import React, { Fragment } from 'react';
+import React, { Component } from 'react';
 import FoursquareInfo from './FoursquareInfo'
 
-function ListView(props){
 
-// let id = 0;
-let fragID = 0;
+class ListView extends Component {
+  state={
+    fsIsLoaded: false //conditional for when list items are ready to render
+  }
 
+  // when this.state.venues has loaded, set fsIsLoaded
+  componentDidUpdate(prevProps,prevState){
+    if(prevProps.venues !== this.props.venues){
+      this.setState({fsIsLoaded: true})
+    }
+  }
 
-  return (
-    <ul className="list" onClick={(e)=> {props.animateMarker(e.target); props.toggleDbInfo(e.target);}}
-    >
-      {props.showLocations.map(location => {
-        let filteredData = props.foursquareDb.filter(l => l.id === location.venueId)
-
-          return(
-        <Fragment key={fragID++}>
-          <li
-            key={location.id}
-            id={location.id}
-            className="list-item"
-            >
-            {location.title}
-
-         {location.foursquareInfoIsShowing === true
-            ? <FoursquareInfo
-                className="foursquare-info"
-                // key={location.id}
-                style={{pointerEvents: 'none'}}
-                filteredDb={filteredData}
-              />
-            : null
-          }
-        </li>
-      </Fragment>
-      )})}
-    </ul>
-  )
+  handleClick = (id) => {
+  this.props.showMarker(this.props.markers[id])
+  // console.log(this.props.markers[id])
 }
 
+  render(){
+console.log(this.props.showLocations);
+  return(
+    <ul className='list'>
+
+    {this.state.fsIsLoaded
+
+    ? this.props.showLocations.map((venue, index) => {
+      if(venue !== null){
+      return(
+      <li key={venue.response.venue.id} id={venue.response.venue.id} onClick={()=>this.handleClick(index)}>{venue.response.venue.name}</li>
+    )}
+  }
+  )
+    : <li>Loading...</li>
+    }
+    </ul>
+    )
+  }
+}
+
+
+
 export default ListView
-
-         // {location.foursquareInfoIsShowing === true
-         //    ? <FoursquareInfo
-         //        key={id++}
-         //        filteredDb={props.filteredDb}
-         //      />
-         //    : null
-         //  }
-
-          // {location.foursquareInfoIsShowing === true
-         //    ? props.foursquareDb
-                  // .filter(l => l.id===location.venueId)
-                  // /map(filteredData=>(
-         //      <FoursquareInfo
-         //        key={id++}
-         //        filteredDb={props.filteredDb}
-         //      />))
-         //    : null
-         //  }
