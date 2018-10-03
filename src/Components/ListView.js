@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 class ListView extends Component {
   state={
-    fsIsLoaded: false //conditional for when list items are ready to render
+    fsIsLoaded: false //conditional for when list items are ready to render at onset
   }
 
   // when this.state.venues has loaded, set fsIsLoaded
@@ -24,11 +24,15 @@ class ListView extends Component {
     <ul className='list'>
 
     {this.state.fsIsLoaded
-
     ? this.props.showLocations.map((venue, index) => {
       if(venue !== null){
       return(
-      <li key={venue.response.venue.id} id={venue.response.venue.id} onClick={()=>this.handleClick(index)}>{venue.response.venue.name}</li>
+      <li key={venue.response.venue.id}
+          className='list-item'
+          id={venue.response.venue.id}
+          onClick={()=>this.handleClick(index)}
+          >{venue.response.venue.name}
+      </li>
       )
     }
   }
@@ -37,7 +41,10 @@ class ListView extends Component {
     ? this.props.showLocations.map((venue, index) => {
       if(venue !== null){
       return(
-      <li key={venue.response.venue.id} id={venue.response.venue.id} onClick={()=>this.handleClick(index)}>{venue.response.venue.name}</li>
+      <li key={venue.response.venue.id}
+          className='list-item'
+          id={venue.response.venue.id}
+          onClick={()=>this.handleClick(index)}>{venue.response.venue.name}</li>
       )
     }
   }
@@ -47,17 +54,7 @@ class ListView extends Component {
     </ul>
     )
   }
+
 }
 
-
-
 export default ListView
-
-  // if closed && screenWidth < 770
-// hide listView.className = 'hide'
-//.hide{
-  // display:none;
-// }
-// listView.addstyle.display = none;
-
-// have it all showing
