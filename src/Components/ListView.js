@@ -33,7 +33,16 @@ class ListView extends Component {
     }
   }
   )
-    : <li>Loading...</li>
+    : this.props.venues.length > 0
+    ? this.props.showLocations.map((venue, index) => {
+      if(venue !== null){
+      return(
+      <li key={venue.response.venue.id} id={venue.response.venue.id} onClick={()=>this.handleClick(index)}>{venue.response.venue.name}</li>
+      )
+    }
+  }
+  )
+    :<li>Loading...</li>
     }
     </ul>
     )
@@ -43,3 +52,12 @@ class ListView extends Component {
 
 
 export default ListView
+
+  // if closed && screenWidth < 770
+// hide listView.className = 'hide'
+//.hide{
+  // display:none;
+// }
+// listView.addstyle.display = none;
+
+// have it all showing
