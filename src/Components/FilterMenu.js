@@ -65,7 +65,9 @@ function FilterMenu(props) {
             foursquareDb={props.foursquareDb}
             toggleDbInfo={props.toggleDbInfo}
             filteredDb={props.filteredDb}
-            // locations={props.locations}
+            venues={props.venues}
+            markers={props.markers}
+            showMarker={props.showMarker}
           />
         </div>
       )
