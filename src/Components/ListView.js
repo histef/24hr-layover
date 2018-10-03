@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import FoursquareInfo from './FoursquareInfo'
 
 
 class ListView extends Component {
@@ -20,7 +19,7 @@ class ListView extends Component {
 }
 
   render(){
-console.log(this.props.showLocations);
+// console.log(this.props.showLocations);
   return(
     <ul className='list'>
 
@@ -30,7 +29,8 @@ console.log(this.props.showLocations);
       if(venue !== null){
       return(
       <li key={venue.response.venue.id} id={venue.response.venue.id} onClick={()=>this.handleClick(index)}>{venue.response.venue.name}</li>
-    )}
+      )
+    }
   }
   )
     : <li>Loading...</li>

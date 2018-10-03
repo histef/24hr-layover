@@ -66,7 +66,6 @@ function FilterMenu(props) {
             toggleDbInfo={props.toggleDbInfo}
             filteredDb={props.filteredDb}
             venues={props.venues}
-            markers={props.markers}
             showMarker={props.showMarker}
           />
         </div>
