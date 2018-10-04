@@ -7,8 +7,8 @@ import './App.css'
 import FilterMenu from './Components/FilterMenu.js'
 import Footer from './Components/Footer'
 
-   // {title: 'Cafe Du Monde', location: {lat: 29.9574,lng: -90.0618}, venueId: '4aa59477f964a520dd4820e3', id:3, foursquareInfoIsShowing: false},
-  // {title: 'Preservation Hall', location: {lat: 29.9583,lng: -90.0654}, venueId: '41326e00f964a520081a1fe3', id:5, foursquareInfoIsShowing: false}
+
+
 
 class App extends Component {
   state = {
@@ -21,22 +21,41 @@ class App extends Component {
     infoWindow: {},
     filteredVenues: [],
     locations: [
-      {title: 'Ace Hotel', location: {lat: 29.9483,lng: -90.0719}, venueId: '56c9eeeb498e242cd07bb392', id:4, foursquareInfoIsShowing: false},
+      {
+        title: 'Ace Hotel',
+        location: {lat: 29.9483,lng: -90.0719},
+        venueId: '56c9eeeb498e242cd07bb392',
+        id:0,
+        foursquareInfoIsShowing: false
+      },
       {
         title: 'Bacchanal Fine Wine & Spirits',
         location: {lat: 29.9598,lng: -90.0332},
         venueId: '4adbaabff964a520e62921e3',
-        id:0,
+        id:1,
         foursquareInfoIsShowing: false
       },
       {
         title: 'Bourbon Street',
         location: {lat: 29.9540,lng: -90.0698},
         venueId: '4c41e11a520fa593d744caac',
-        id:1,
+        id:2,
         foursquareInfoIsShowing: false
       },
-        {title: 'Lafayette Cemetery No. 1', location: {lat: 29.9288,lng: -90.0854}, venueId: '4ad4c04ef964a520d4f320e3', id:2, foursquareInfoIsShowing: false},
+      {
+        title: 'Cafe Du Monde',
+        location: {lat: 29.9574,lng: -90.0618},
+        venueId: '4aa59477f964a520dd4820e3',
+        id:3,
+        foursquareInfoIsShowing: false
+      },
+      {
+        title: 'Preservation Hall',
+        location: {lat: 29.9583,lng: -90.0654},
+        venueId: '41326e00f964a520081a1fe3',
+        id:5,
+        foursquareInfoIsShowing: false
+      }
     ],
   }
 
@@ -164,6 +183,7 @@ class App extends Component {
     } else {
     content = `<p style="text-align: center">${venueFromDb[0].response.venue.name}</p>
                <p style="text-align: center">${venueFromDb[0].response.venue.location.address}</p>
+               <p style="text-align: center">Rating: ${venueFromDb[0].response.venue.rating}</p>
                <a href=${venueFromDb[0].response.venue.url} style="text-align: center">Go to website</a>`
     }
 
