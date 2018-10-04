@@ -72,7 +72,6 @@ class App extends Component {
       axios
         .get( `https://api.foursquare.com/v2/venues/${location.venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`)
         .then(response => {
-          // console.log(response.data)
           addVenues.push(response.data);
           this.setState({ venues: this.state.venues.concat(response.data),
             //sort filteredVenues so initial rendering is sorted alphabetically
@@ -113,7 +112,7 @@ class App extends Component {
     let map = new window.google.maps.Map(this.mapContainer, options)
 
     // making the info window
-    let infoWindow = new window.google.maps.InfoWindow();
+    let infoWindow = new window.google.maps.InfoWindow({maxWidth: 100});
 
     this.setState({ map, infoWindow })
 
@@ -159,12 +158,13 @@ class App extends Component {
   showInfoWindow = marker => {
     let content;
     let venueFromDb = this.state.venues.filter(v => v.response.venue.id === marker.venueId)
-    // console.log(venueFromDb[0].response);
+
     if(venueFromDb[0] === undefined){
-      content =`<p>Sorry,no information at this time</p>`
+      content =`<p style="text-align: center">Sorry, no information at this time</p>`
     } else {
-    content = `<p>${venueFromDb[0].response.venue.name}</p>
-               <p>${venueFromDb[0].response.venue.rating}</p>`
+    content = `<p style="text-align: center">${venueFromDb[0].response.venue.name}</p>
+               <p style="text-align: center">${venueFromDb[0].response.venue.location.address}</p>
+               <a href=${venueFromDb[0].response.venue.url} style="text-align: center">Go to website</a>`
     }
 
     this.state.infoWindow.setContent(content);
