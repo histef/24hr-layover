@@ -9,7 +9,6 @@ import Footer from './Components/Footer'
 
 
    // {title: 'Cafe Du Monde', location: {lat: 29.9574,lng: -90.0618}, venueId: '4aa59477f964a520dd4820e3', id:3, foursquareInfoIsShowing: false},
-
   // {title: 'Preservation Hall', location: {lat: 29.9583,lng: -90.0654}, venueId: '41326e00f964a520081a1fe3', id:5, foursquareInfoIsShowing: false}
 
 
@@ -52,12 +51,6 @@ class App extends Component {
     this.googleChecker();
   }
 
-  // componentDidUpdate(prevProps,prevState){
-  //   if(prevState.venues !== this.state.venues){
-  //     this.setState({ filteredVenues: this.state.venues })
-  //   }
-  // }
-
   componentWillUnmount = () => {
     window.removeEventListener('resize', this.updateWindowDimensions);
   }
@@ -67,9 +60,10 @@ class App extends Component {
     this.setState({ getWidth: window.innerWidth });
   }
 
+  // https://stackoverflow.com/questions/45429484/how-to-implement-google-maps-js-api-in-react-without-an-external-library
   googleChecker = () => {
       if (!window.google) {
-          console.error("Google API did not load yet");
+          console.error("Google API has not loaded yet");
       } else {
           //google maps API is ready, so render the map
           this.loadVenues();
@@ -90,9 +84,18 @@ class App extends Component {
         filteredVenues: this.state.venues.concat(response.data).sort( (a,b) => a.response.venue.name > b.response.venue.name) })
       })
     .catch(error => {
-      alert("Error: Couldn't load data from Foursquare.");
-      console.log("ERROR: " + error);
-    });
+      //https://github.com/axios/axios
+      if(error.response){
+      console.log('Error data: ', error.response.data);
+      console.log('Error status: ', error.response.status);
+      console.log('Error headers: ', error.response.headers);
+    } else if (error.request) {
+      console.log('Error request: ', error.request);
+    } else {
+      console.log('Error', error.message);
+    }
+    console.log('Error config', error.config);
+  });
 
     return addVenues;
   })
@@ -149,6 +152,10 @@ class App extends Component {
     })
     this.setState({ markers });
   }
+
+  // gm_authFailure = () => {
+  //   console.log('Google Maps: Authentification Error')
+  // }
 
   showMarker = ( marker ) => {
     marker.setAnimation(window.google.maps.Animation.BOUNCE);
