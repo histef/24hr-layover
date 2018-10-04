@@ -37,6 +37,7 @@ class ListView extends Component {
       </li>
       )
     }
+    return venue
   }
   )
     : this.props.venues.length > 0
@@ -53,6 +54,7 @@ class ListView extends Component {
       </li>
       )
     }
+    return venue
   }
   )
     :<li>Loading...</li>
