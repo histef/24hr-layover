@@ -1,7 +1,7 @@
 import React, { Fragment,Component } from 'react'
 import escapeRegExp from 'escape-string-regexp'
 import axios from 'axios';
-import { clientId, clientSecret } from './config'
+import { clientId, clientSecret } from './fs.js'
 import './App.css'
 
 import FilterMenu from './Components/FilterMenu.js'
