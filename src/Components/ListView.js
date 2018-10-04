@@ -16,10 +16,11 @@ class ListView extends Component {
 
   handleClick = (id) => {
     this.props.showMarker(this.props.markers[id])
+
 }
 
   render(){
-
+// console.log(this.props.showLocations);
   return(
     <ul className='list'>
 
@@ -32,7 +33,6 @@ class ListView extends Component {
           id={venue.response.venue.id}
           tabIndex='0'
           onClick={()=>this.handleClick(index)}
-          onKeyDown={()=>this.handleClick(index)}
           >{venue.response.venue.name}
       </li>
       )
