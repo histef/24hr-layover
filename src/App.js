@@ -11,7 +11,6 @@ class App extends Component {
   state = {
     venues: [],
     filterMenuIsOpen: true,
-    getWidth: window.innerWidth,
     searchfield: '',
     map: {},
     markers: [],
@@ -57,61 +56,18 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    window.addEventListener('resize', this.updateWindowDimensions);
-    this.updateWindowDimensions();
     this.googleChecker();
   }
 
-  componentWillUnmount = () => {
-    window.removeEventListener('resize', this.updateWindowDimensions);
-  }
-
-  //depending on user screen, re-render the layout for page
-  //https://stackoverflow.com/questions/45644457/action-on-window-resize-in-react
-  updateWindowDimensions = () => {
-    this.setState({ getWidth: window.innerWidth });
-  }
-
-  // https://stackoverflow.com/questions/45429484/how-to-implement-google-maps-js-api-in-react-without-an-external-library
+  //code attributed to: https://stackoverflow.com/questions/45429484/how-to-implement-google-maps-js-api-in-react-without-an-external-library
   googleChecker = () => {
       if (!window.google) {
           console.error("Google API has not loaded yet");
       } else {
           //google maps API is ready, so render the map
+          this.initMap();
           this.loadVenues();
       }
-  }
-
-  loadVenues = () => {
-    let addVenues = [];
-
-    this.state.locations.map( location => {
-      axios
-        .get( `https://api.foursquare.com/v2/venues/${location.venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`)
-        .then(response => {
-          addVenues.push(response.data);
-          this.setState({ venues: this.state.venues.concat(response.data),
-            //sort filteredVenues so initial rendering is sorted alphabetically
-            filteredVenues: this.state.venues.concat(response.data).sort( (a,b) => a.response.venue.name > b.response.venue.name) })
-          })
-        .catch(error => {
-          //https://github.com/axios/axios
-          if(error.response){
-          console.log('Error data: ', error.response.data);
-          console.log('Error status: ', error.response.status);
-          console.log('Error headers: ', error.response.headers);
-        } else if (error.request) {
-          console.log('Error request: ', error.request);
-        } else {
-          console.log('Error', error.message);
-        }
-        console.log('Error config', error.config);
-      });
-
-      return addVenues;
-    })
-
-    this.initMap();
   }
 
   // create the map
@@ -160,6 +116,36 @@ class App extends Component {
       return marker;
     })
     this.setState({ markers });
+  }
+
+  loadVenues = () => {
+    let addVenues = [];
+
+    this.state.locations.map( location => {
+      axios
+        .get( `https://api.foursquare.com/v2/venues/${location.venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`)
+        .then(response => {
+          addVenues.push(response.data);
+          this.setState({ venues: this.state.venues.concat(response.data),
+            //sort filteredVenues so initial rendering is sorted alphabetically
+            filteredVenues: this.state.venues.concat(response.data).sort( (a,b) => a.response.venue.name > b.response.venue.name) })
+          })
+        .catch(error => {
+          //code attributed to: https://github.com/axios/axios
+          if(error.response){
+          console.log('Error data: ', error.response.data);
+          console.log('Error status: ', error.response.status);
+          console.log('Error headers: ', error.response.headers);
+        } else if (error.request) {
+          console.log('Error request: ', error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+        console.log('Error config', error.config);
+      });
+
+      return addVenues;
+    })
   }
 
   showMarker = ( marker ) => {

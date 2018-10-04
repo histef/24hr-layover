@@ -5,7 +5,7 @@ import ListView from './ListView'
 function FilterMenu(props) {
 
   //handles closed filter menu layout for larger screens
-  if (props.screenWidth > 770 && props.filterMenuIsOpen === false) {
+  if (window.innerWidth > 770 && props.filterMenuIsOpen === false) {
     return (
       <aside className='filter-menu' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: 0, position: 'fixed', top: 247, width: 45, height: 70, backgroundColor: '#e47f00'}}>
         <button aria-label="close" className="icon"  onClick={props.onToggleFilterMenu}>
@@ -20,7 +20,7 @@ function FilterMenu(props) {
   }
 
   //handles closed filter menu layout for smaller screens
-  else if (props.screenWidth < 770 && props.filterMenuIsOpen === false) {
+  else if (window.innerWidth < 770 && props.filterMenuIsOpen === false) {
     return (
       <aside className='filter-menu'>
         <div className='filter-header'>
