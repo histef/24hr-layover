@@ -4,46 +4,28 @@ import ListView from './ListView'
 
 function FilterMenu(props) {
 
-    //handles closed filter menu layout for larger screens
-    if (props.screenWidth > 770 && props.filterMenuIsOpen === false) {
-      return (
-        <div className='filter-menu' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: 0, position: 'fixed', top: 247, width: 45, height: 70, backgroundColor: '#e47f00'}}>
-          <button className="icon"  onClick={props.onToggleFilterMenu}>
-            {
-              props.filterMenuIsOpen
-              ? <i className="fas fa-times"></i>
-              : <i className="fas fa-bars"></i>
-            }
-          </button>
-        </div>
-      )
-    }
+  //handles closed filter menu layout for larger screens
+  if (props.screenWidth > 770 && props.filterMenuIsOpen === false) {
+    return (
+      <aside className='filter-menu' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: 0, position: 'fixed', top: 247, width: 45, height: 70, backgroundColor: '#e47f00'}}>
+        <button aria-label="close" className="icon"  onClick={props.onToggleFilterMenu}>
+          {
+            props.filterMenuIsOpen
+            ? <i className="fas fa-times"></i>
+            : <i className="fas fa-bars"></i>
+          }
+        </button>
+      </aside>
+    )
+  }
 
-    //handles closed filter menu layout for smaller screens
-    else if (props.screenWidth < 770 && props.filterMenuIsOpen === false) {
-      return (
-        <div className='filter-menu'>
-          <div className='filter-header'>
-            <h2>Filter Menu</h2>
-            <button className="icon" onClick={props.onToggleFilterMenu}>
-              {
-                props.filterMenuIsOpen
-                ? <i className="fas fa-times"></i>
-                : <i className="fas fa-bars"></i>
-              }
-            </button>
-          </div>
-        </div>
-      )
-    }
-
-    //open filter menu layout
-    else {
-      return (
-        <div className='filter-menu'>
+  //handles closed filter menu layout for smaller screens
+  else if (props.screenWidth < 770 && props.filterMenuIsOpen === false) {
+    return (
+      <aside className='filter-menu'>
         <div className='filter-header'>
           <h2>Filter Menu</h2>
-          <button className="icon" onClick={props.onToggleFilterMenu}>
+          <button aria-label="close" className="icon" onClick={props.onToggleFilterMenu}>
             {
               props.filterMenuIsOpen
               ? <i className="fas fa-times"></i>
@@ -51,26 +33,44 @@ function FilterMenu(props) {
             }
           </button>
         </div>
-          <SearchField
-            onUpdateSearch={props.onUpdateSearch}
-            onGetLocations={props.onGetLocations}
-            value={props.value}
-          />
-          <ListView
-            value={props.value}
-            showLocations={props.showLocations}
-            updateChosenLocation={props.updateChosenLocation}
-            markers={props.markers}
-            animateMarker={props.animateMarker}
-            foursquareDb={props.foursquareDb}
-            toggleDbInfo={props.toggleDbInfo}
-            filteredDb={props.filteredDb}
-            venues={props.venues}
-            showMarker={props.showMarker}
-          />
-        </div>
-      )
-    }
+      </aside>
+    )
+  }
+
+  //open filter menu layout
+  else {
+    return (
+      <aside className='filter-menu'>
+      <div className='filter-header'>
+        <h2>Filter Menu</h2>
+        <button aria-label="close" className="icon" onClick={props.onToggleFilterMenu}>
+          {
+            props.filterMenuIsOpen
+            ? <i className="fas fa-times"></i>
+            : <i className="fas fa-bars"></i>
+          }
+        </button>
+      </div>
+        <SearchField
+          onUpdateSearch={props.onUpdateSearch}
+          onGetLocations={props.onGetLocations}
+          value={props.value}
+        />
+        <ListView
+          value={props.value}
+          showLocations={props.showLocations}
+          updateChosenLocation={props.updateChosenLocation}
+          markers={props.markers}
+          animateMarker={props.animateMarker}
+          foursquareDb={props.foursquareDb}
+          toggleDbInfo={props.toggleDbInfo}
+          filteredDb={props.filteredDb}
+          venues={props.venues}
+          showMarker={props.showMarker}
+        />
+      </aside>
+    )
+  }
 }
 
 export default FilterMenu

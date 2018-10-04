@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 
 class ListView extends Component {
   state={
-    fsIsLoaded: false //conditional for when list items are ready to render at onset
+    //conditional for when list items are ready to render at onset
+    fsIsLoaded: false
   }
 
   // when this.state.venues has loaded, set fsIsLoaded
@@ -14,12 +15,11 @@ class ListView extends Component {
   }
 
   handleClick = (id) => {
-  this.props.showMarker(this.props.markers[id])
-  // console.log(this.props.markers[id])
+    this.props.showMarker(this.props.markers[id])
 }
 
   render(){
-// console.log(this.props.showLocations);
+
   return(
     <ul className='list'>
 
@@ -30,7 +30,9 @@ class ListView extends Component {
       <li key={venue.response.venue.id}
           className='list-item'
           id={venue.response.venue.id}
+          tabIndex='0'
           onClick={()=>this.handleClick(index)}
+          onKeyDown={()=>this.handleClick(index)}
           >{venue.response.venue.name}
       </li>
       )
@@ -44,7 +46,11 @@ class ListView extends Component {
       <li key={venue.response.venue.id}
           className='list-item'
           id={venue.response.venue.id}
-          onClick={()=>this.handleClick(index)}>{venue.response.venue.name}</li>
+          tabIndex='0'
+          onClick={()=>this.handleClick(index)}
+          onKeyDown={()=>this.handleClick(index)}
+          >{venue.response.venue.name}
+      </li>
       )
     }
   }
@@ -58,3 +64,4 @@ class ListView extends Component {
 }
 
 export default ListView
+

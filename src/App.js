@@ -7,10 +7,8 @@ import './App.css'
 import FilterMenu from './Components/FilterMenu.js'
 import Footer from './Components/Footer'
 
-
    // {title: 'Cafe Du Monde', location: {lat: 29.9574,lng: -90.0618}, venueId: '4aa59477f964a520dd4820e3', id:3, foursquareInfoIsShowing: false},
   // {title: 'Preservation Hall', location: {lat: 29.9583,lng: -90.0654}, venueId: '41326e00f964a520081a1fe3', id:5, foursquareInfoIsShowing: false}
-
 
 class App extends Component {
   state = {
@@ -18,11 +16,9 @@ class App extends Component {
     filterMenuIsOpen: true,
     getWidth: window.innerWidth,
     searchfield: '',
-    chosenLocation: 0,
     map: {},
     markers: [],
     infoWindow: {},
-    foursquareDb: [],
     filteredVenues: [],
     locations: [
       {title: 'Ace Hotel', location: {lat: 29.9483,lng: -90.0719}, venueId: '56c9eeeb498e242cd07bb392', id:4, foursquareInfoIsShowing: false},
@@ -70,47 +66,48 @@ class App extends Component {
   }
 
   loadVenues = () => {
-  let addVenues = [];
+    let addVenues = [];
 
-  this.state.locations.map( location => {
-  axios
-    .get( `https://api.foursquare.com/v2/venues/${location.venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`)
-    .then(response => {
-      // console.log(response.data)
-      addVenues.push(response.data);
-      this.setState({ venues: this.state.venues.concat(response.data),
-        //sort filteredVenues so initial rendering is sorted alphabetically
-        filteredVenues: this.state.venues.concat(response.data).sort( (a,b) => a.response.venue.name > b.response.venue.name) })
-      })
-    .catch(error => {
-      //https://github.com/axios/axios
-      if(error.response){
-      console.log('Error data: ', error.response.data);
-      console.log('Error status: ', error.response.status);
-      console.log('Error headers: ', error.response.headers);
-    } else if (error.request) {
-      console.log('Error request: ', error.request);
-    } else {
-      console.log('Error', error.message);
-    }
-    console.log('Error config', error.config);
-  });
+    this.state.locations.map( location => {
+      axios
+        .get( `https://api.foursquare.com/v2/venues/${location.venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`)
+        .then(response => {
+          // console.log(response.data)
+          addVenues.push(response.data);
+          this.setState({ venues: this.state.venues.concat(response.data),
+            //sort filteredVenues so initial rendering is sorted alphabetically
+            filteredVenues: this.state.venues.concat(response.data).sort( (a,b) => a.response.venue.name > b.response.venue.name) })
+          })
+        .catch(error => {
+          //https://github.com/axios/axios
+          if(error.response){
+          console.log('Error data: ', error.response.data);
+          console.log('Error status: ', error.response.status);
+          console.log('Error headers: ', error.response.headers);
+        } else if (error.request) {
+          console.log('Error request: ', error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+        console.log('Error config', error.config);
+      });
 
-    return addVenues;
-  })
+      return addVenues;
+    })
 
     this.initMap();
   }
 
   // create the map
   initMap = () => {
-    const options = {
-            zoom: 13,
-            center: {
-                lat: 29.9511,
-                lng: -90.0600
-            }
+    const options =
+      {
+        zoom: 13,
+        center: {
+          lat: 29.9511,
+          lng: -90.0600
         }
+      }
 
     // create map instance
     let map = new window.google.maps.Map(this.mapContainer, options)
@@ -122,23 +119,20 @@ class App extends Component {
 
     // render markers
     let markers = this.state.locations.map(location => {
-      //infowindow content
-      // var contentString = `${myVenue.response.venue.name} @ ${myVenue.response.venue.location.address}`;
 
      let position = location.location;
       let title = location.title;
       let id = location.id;
       let venueId = location.venueId;
 
-
       //creates each marker
       let marker = new window.google.maps.Marker({
-          map,
-          position,
-          title,
-          animation: window.google.maps.Animation.DROP,
-          id,
-          venueId
+        map,
+        position,
+        title,
+        animation: window.google.maps.Animation.DROP,
+        id,
+        venueId
       });
 
       // click on marker
@@ -152,10 +146,6 @@ class App extends Component {
     this.setState({ markers });
   }
 
-  // gm_authFailure = () => {
-  //   console.log('Google Maps: Authentification Error')
-  // }
-
   showMarker = ( marker ) => {
     marker.setAnimation(window.google.maps.Animation.BOUNCE);
       setTimeout(function() {
@@ -163,7 +153,8 @@ class App extends Component {
       }, 400);
 
     this.showInfoWindow(marker);
-}
+  }
+
   //populate and animate infowindow
   showInfoWindow = marker => {
     let content;
@@ -173,11 +164,10 @@ class App extends Component {
       content =`<p>Sorry,no information at this time</p>`
     } else {
     content = `<p>${venueFromDb[0].response.venue.name}</p>
-                  <p>${venueFromDb[0].response.venue.rating}</p>`
+               <p>${venueFromDb[0].response.venue.rating}</p>`
     }
 
     this.state.infoWindow.setContent(content);
-
     this.state.infoWindow.open(this.state.map, marker);
   }
 
@@ -214,7 +204,6 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <Fragment>
         <header>
@@ -229,18 +218,17 @@ class App extends Component {
             value={this.state.searchfield}
             onGetLocations={this.getLocations}
             showLocations={this.state.filteredVenues}
-            updateChosenLocation={this.updateChosenLocation}
             markers={this.state.markers}
-            animateMarker={this.animateMarkerFromList}
-            foursquareDb={this.state.foursquareDb}
-            toggleDbInfo={this.toggleDbInfo}
             venues={this.state.venues}
             showMarker={this.showMarker}
           />
           <main
             style={{ width: 500, height: 500, backgroundColor: '#ddd'}}
             id="map"
-            ref={div => {this.mapContainer = div}}>
+            ref={div => {this.mapContainer = div}}
+            role="application"
+            aria-label="map of New Orleans venues"
+          >
           </main>
         </div>
         <Footer />
