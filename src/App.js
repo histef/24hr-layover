@@ -223,7 +223,7 @@ class App extends Component {
             showMarker={this.showMarker}
           />
           <main
-            style={{ width: 500, height: 500, backgroundColor: '#ddd'}}
+            style={{ width: '85vw', height: 500, backgroundColor: '#ddd'}}
             id="map"
             ref={div => {this.mapContainer = div}}
             role="application"

@@ -172,6 +172,7 @@ footer > i {
   }
 
   .filter-menu {
+    height: 500px;
     margin: 50px 0 50px 50px;
     flex: 1;
   }
@@ -179,5 +180,15 @@ footer > i {
   #map {
     flex: 1;
     margin: 50px 50px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .filter-menu {
+    flex: 1;
+  }
+
+  #map {
+    flex: 2;
   }
 }
