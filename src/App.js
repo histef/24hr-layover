@@ -7,9 +7,6 @@ import './App.css'
 import FilterMenu from './Components/FilterMenu.js'
 import Footer from './Components/Footer'
 
-
-
-
 class App extends Component {
   state = {
     venues: [],
@@ -70,6 +67,7 @@ class App extends Component {
   }
 
   //depending on user screen, re-render the layout for page
+  //https://stackoverflow.com/questions/45644457/action-on-window-resize-in-react
   updateWindowDimensions = () => {
     this.setState({ getWidth: window.innerWidth });
   }
