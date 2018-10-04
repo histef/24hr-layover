@@ -45,7 +45,6 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-
     window.addEventListener('resize', this.updateWindowDimensions);
     this.updateWindowDimensions();
     this.googleChecker();
@@ -167,11 +166,15 @@ class App extends Component {
 }
   //populate and animate infowindow
   showInfoWindow = marker => {
+    let content;
     let venueFromDb = this.state.venues.filter(v => v.response.venue.id === marker.venueId)
     // console.log(venueFromDb[0].response);
-
-    let content = `<p>${venueFromDb[0].response.venue.name}</p>
+    if(venueFromDb[0] === undefined){
+      content =`<p>Sorry,no information at this time</p>`
+    } else {
+    content = `<p>${venueFromDb[0].response.venue.name}</p>
                   <p>${venueFromDb[0].response.venue.rating}</p>`
+    }
 
     this.state.infoWindow.setContent(content);
 
