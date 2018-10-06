@@ -12,7 +12,7 @@ This is the final project for the Udacity Front-End Nanodegree. I was tasked to 
 
 ![app on load](https://github.com/histef/neighborhood-map/blob/master/images/app%20on%20load.png)
 
-![animated header, open infowindow](https://github.com/histef/neighborhood-map/blob/master/images/%20header%20animation%20and%20infowindow%20open.png)
+![animated header, open infowindow](https://github.com/histef/neighborhood-map/blob/master/images/animated-site.png)
 
 This map is generated using the Google Maps API.
 The venue information is from the Foursquare API.
