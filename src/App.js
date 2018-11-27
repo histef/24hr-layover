@@ -1,7 +1,7 @@
 import React, { Fragment,Component } from 'react'
 import escapeRegExp from 'escape-string-regexp'
 import axios from 'axios';
-import { clientId, clientSecret } from './fs.js'
+import { clientId, clientSecret } from './config.js'
 import './App.css'
 
 import FilterMenu from './Components/FilterMenu.js'
@@ -127,7 +127,7 @@ class App extends Component {
         .then(response => {
           addVenues.push(response.data);
           this.setState({ venues: this.state.venues.concat(response.data),
-            //sort filteredVenues so initial rendering is sorted alphabetically
+            //sort filteredVenues so initial rendering is sorted alphabetically (could also use promise.all(but if one rejects, they all reject))
             filteredVenues: this.state.venues.concat(response.data).sort( (a,b) => a.response.venue.name > b.response.venue.name) })
           })
         .catch(error => {
@@ -188,6 +188,7 @@ class App extends Component {
 
   // when user is searching find matching this.state.venues, store in filteredVenues
   getLocations = (search) => {
+    //TODO: somehow need to get the é from cafe and 'replace' with e
     let newVenues=[];
     if (search){
       const match = new RegExp(escapeRegExp(search), 'i')
@@ -214,6 +215,7 @@ class App extends Component {
           <h1 className="title"><span>New Orleans</span><br />Neighborhood Map</h1>
         </header>
         <div className="wrapper">
+          <p className="intro">I went to New Orleans for the first time over the summer. I quickly fell in love with the city. The vibrancy of Bourbon Street, the oh-so-delicious comfort food with a creole twist, and, of course, love that jazz. I have curated a list of tested and approved eateries, venues and sights when visiting this beautiful place. Enjoy!</p>
           <FilterMenu
             filterMenuIsOpen={this.state.filterMenuIsOpen}
             onToggleFilterMenu={this.toggleFilterMenu}
