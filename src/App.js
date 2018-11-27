@@ -49,16 +49,9 @@ class App extends Component {
         title: 'Preservation Hall',
         location: {lat: 29.9583,lng: -90.0654},
         venueId: '41326e00f964a520081a1fe3',
-        id:4,
-        foursquareInfoIsShowing: false
-      },
-            {
-        title: 'Shaya',
-        location: {lat: 29.9210,lng: -90.0995},
-        venueId: '547e7d1a498e82531865bd62',
         id:5,
         foursquareInfoIsShowing: false
-      },
+      }
     ],
   }
 
@@ -81,7 +74,7 @@ class App extends Component {
   initMap = () => {
     const options =
       {
-        zoom: 12,
+        zoom: 13,
         center: {
           lat: 29.9511,
           lng: -90.0600
@@ -195,6 +188,7 @@ class App extends Component {
 
   // when user is searching find matching this.state.venues, store in filteredVenues
   getLocations = (search) => {
+    //TODO: somehow need to get the é from cafe and 'replace' with e
     let newVenues=[];
     if (search){
       const match = new RegExp(escapeRegExp(search), 'i')
@@ -221,7 +215,7 @@ class App extends Component {
           <h1 className="title"><span>New Orleans</span><br />Neighborhood Map</h1>
         </header>
         <div className="wrapper">
-          <p className="intro">I went to New Orleans for the first time over the summer. I quickly fell in love with the city. The vibrancy of Bourbon Street, the oh-so-delicious comfort food with a creole twist, and, of course, love that jazz. As such, I want to spread the love, so I have curated a list of tested and approved eateries, venues and sights when visiting this beautiful place. Enjoy!</p>
+          <p className="intro">I went to New Orleans for the first time over the summer. I quickly fell in love with the city. The vibrancy of Bourbon Street, the oh-so-delicious comfort food with a creole twist, and, of course, love that jazz. I have curated a list of tested and approved eateries, venues and sights when visiting this beautiful place. Enjoy!</p>
           <FilterMenu
             filterMenuIsOpen={this.state.filterMenuIsOpen}
             onToggleFilterMenu={this.toggleFilterMenu}
