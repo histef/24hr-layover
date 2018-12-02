@@ -57,14 +57,10 @@ function FilterMenu(props) {
           value={props.value}
         />
         <ListView
+          showVenueDesc={props.showVenueDesc}
           value={props.value}
           filteredVenues={props.filteredVenues}
-          updateChosenLocation={props.updateChosenLocation}
           markers={props.markers}
-          animateMarker={props.animateMarker}
-          foursquareDb={props.foursquareDb}
-          toggleDbInfo={props.toggleDbInfo}
-          filteredDb={props.filteredDb}
           venues={props.venues}
           showMarker={props.showMarker}
         />

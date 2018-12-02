@@ -142,12 +142,23 @@ form input {
 }
 
 /*FOURSQUARE COMPONENT*/
-.foursquare-info {
+.foursquare-desc {
+  width: 50%;
+  height: 40%;
+  max-width: 730px;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
   color: black;
   padding: 10px;
-  margin: 5px;
+  margin: auto auto 50px auto;
   box-shadow: 4px 7px 5px #888888;
+}
+
+.venueImg {
+  justify-content: center;
 }
 
 /*FOOTER*/

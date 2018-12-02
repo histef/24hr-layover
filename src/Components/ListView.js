@@ -15,12 +15,12 @@ class ListView extends Component {
   }
 
   handleClick = (id) => {
+    let venueId = this.props.markers[id].venueId;
     this.props.showMarker(this.props.markers[id])
-
+    this.props.showVenueDesc(venueId)
 }
 
   render(){
-// console.log(this.props.filteredVenues);
   return(
     <ul className='list'>
 

@@ -1,11 +1,12 @@
 import React, { Fragment,Component } from 'react'
 import escapeRegExp from 'escape-string-regexp'
 import axios from 'axios';
-import { clientId, clientSecret } from './config.js'
+import { clientId, clientSecret } from './config'
 import './App.css'
 
-import FilterMenu from './Components/FilterMenu.js'
+import FilterMenu from './Components/FilterMenu'
 import Footer from './Components/Footer'
+import FSDescription from './Components/FoursquareDescription'
 
 class App extends Component {
   state = {
@@ -16,6 +17,7 @@ class App extends Component {
     markers: [],
     infoWindow: {},
     filteredVenues: [],
+    clickedVenue: [],
     locations: [
       {
         title: 'Ace Hotel',
@@ -223,6 +225,11 @@ class App extends Component {
     }
   }
 
+  showVenueDesc = (venueId) => {
+    let clickedVenue = this.state.filteredVenues.filter(venue => venue.data.response.venue.id === venueId);
+    this.setState({ clickedVenue: clickedVenue })
+  }
+
   render() {
     return (
       <Fragment>
@@ -242,6 +249,7 @@ class App extends Component {
             markers={this.state.markers}
             venues={this.state.venues}
             showMarker={this.showMarker}
+            showVenueDesc={this.showVenueDesc}
           />
           <main
             style={{ width: '85vw', height: 500, backgroundColor: '#ddd'}}
@@ -252,6 +260,9 @@ class App extends Component {
           >
           </main>
         </div>
+        <FSDescription
+          clickedVenue={this.state.clickedVenue}
+        />
         <Footer />
       </Fragment>
     )
