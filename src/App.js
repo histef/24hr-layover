@@ -38,27 +38,27 @@ class App extends Component {
         id:2,
         foursquareInfoIsShowing: false
       },
-      {
-        title: 'Cafe Du Monde',
-        location: {lat: 29.9574,lng: -90.0618},
-        venueId: '4aa59477f964a520dd4820e3',
-        id:3,
-        foursquareInfoIsShowing: false
-      },
-      {
-        title: 'Preservation Hall',
-        location: {lat: 29.9583,lng: -90.0654},
-        venueId: '41326e00f964a520081a1fe3',
-        id:5,
-        foursquareInfoIsShowing: false
-      },
-      {
-        title: 'Shaya',
-        location: {lat: 29.9210,lng: -90.0995},
-        venueId: '547e7d1a498e82531865bd62',
-        id:5,
-        foursquareInfoIsShowing: false
-      },
+      // {
+      //   title: 'Cafe Du Monde',
+      //   location: {lat: 29.9574,lng: -90.0618},
+      //   venueId: '4aa59477f964a520dd4820e3',
+      //   id:3,
+      //   foursquareInfoIsShowing: false
+      // },
+      // {
+      //   title: 'Preservation Hall',
+      //   location: {lat: 29.9583,lng: -90.0654},
+      //   venueId: '41326e00f964a520081a1fe3',
+      //   id:5,
+      //   foursquareInfoIsShowing: false
+      // },
+      // {
+      //   title: 'Shaya',
+      //   location: {lat: 29.9210,lng: -90.0995},
+      //   venueId: '547e7d1a498e82531865bd62',
+      //   id:5,
+      //   foursquareInfoIsShowing: false
+      // },
     ],
   }
 
@@ -128,15 +128,24 @@ class App extends Component {
   loadVenues = () => {
     let addVenues = [];
 
-    this.state.locations.map( location => {
-      axios
-        .get( `https://api.foursquare.com/v2/venues/${location.venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`)
-        .then(response => {
-          addVenues.push(response.data);
-          this.setState({ venues: this.state.venues.concat(response.data),
-            //sort filteredVenues so initial rendering is sorted alphabetically (could also use promise.all(but if one rejects, they all reject))
-            filteredVenues: this.state.venues.concat(response.data).sort( (a,b) => a.response.venue.name > b.response.venue.name) })
-          })
+   const { locations } = this.state;
+    let url1 = `https://api.foursquare.com/v2/venues/${locations[0].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
+    let url2 = `https://api.foursquare.com/v2/venues/${locations[1].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
+    let url3 = `https://api.foursquare.com/v2/venues/${locations[2].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
+
+    const promise1 = axios.get(url1);
+    const promise2 = axios.get(url2);
+    const promise3 = axios.get(url3);
+
+
+    Promise.all([promise1, promise2, promise3])
+      .then(response => {
+        this.setState({
+          venues: this.state.venues.concat(response)},
+          //sort filteredVenues so initial rendering is sorted alphabetically (could also use promise.all(but if one rejects, they all reject))
+          () => { this.setState({ filteredVenues: this.state.venues}) }
+        )
+      })
         .catch(error => {
           //code attributed to: https://github.com/axios/axios
           if(error.response){
@@ -152,7 +161,6 @@ class App extends Component {
       });
 
       return addVenues;
-    })
   }
 
   showMarker = ( marker ) => {
@@ -167,15 +175,15 @@ class App extends Component {
   //populate and animate infowindow
   showInfoWindow = marker => {
     let content;
-    let venueFromDb = this.state.venues.filter(v => v.response.venue.id === marker.venueId)
+    let venueFromDb = this.state.venues.filter(v => v.data.response.venue.id === marker.venueId)
 
     if(venueFromDb[0] === undefined){
       content =`<p style="text-align: center">Sorry, no information at this time</p>`
     } else {
-    content = `<p style="text-align: center">${venueFromDb[0].response.venue.name}</p>
-               <p style="text-align: center">${venueFromDb[0].response.venue.location.address}</p>
-               <p style="text-align: center">Rating: ${venueFromDb[0].response.venue.rating}</p>
-               <a href=${venueFromDb[0].response.venue.url} style="text-align: center">Go to website</a>`
+    content = `<p style="text-align: center">${venueFromDb[0].data.response.venue.name}</p>
+               <p style="text-align: center">${venueFromDb[0].data.response.venue.location.address}</p>
+               <p style="text-align: center">Rating: ${venueFromDb[0].data.response.venue.rating}</p>
+               <a href=${venueFromDb[0].data.response.venue.url} style="text-align: center">Go to website</a>`
     }
 
     this.state.infoWindow.setContent(content);
@@ -201,9 +209,9 @@ class App extends Component {
       const match = new RegExp(escapeRegExp(search), 'i')
       newVenues = this.state.venues
       //sort this.state.venues so when users not searching anymore, list is still alphabetical
-      .sort( (a,b) => a.response.venue.name > b.response.venue.name)
+      .sort( (a,b) => a.data.response.venue.name > b.data.response.venue.name)
       .map(venue=>{
-        if(match.test(venue.response.venue.name)){
+        if(match.test(venue.data.response.venue.name)){
           return venue;
         } else {
           return venue = null;
@@ -230,7 +238,7 @@ class App extends Component {
             onUpdateSearch={this.updateSearch}
             value={this.state.searchfield}
             onGetLocations={this.getLocations}
-            showLocations={this.state.filteredVenues}
+            filteredVenues={this.state.filteredVenues}
             markers={this.state.markers}
             venues={this.state.venues}
             showMarker={this.showMarker}
