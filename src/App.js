@@ -10,6 +10,7 @@ import FSDescription from './Components/FoursquareDescription'
 
 class App extends Component {
   state = {
+    windowSize: window.innerWidth,
     venues: [],
     filterMenuIsOpen: true,
     searchfield: '',
@@ -26,20 +27,20 @@ class App extends Component {
         id:0,
         foursquareInfoIsShowing: false
       },
-      {
-        title: 'Bacchanal Fine Wine & Spirits',
-        location: {lat: 29.9598,lng: -90.0332},
-        venueId: '4adbaabff964a520e62921e3',
-        id:1,
-        foursquareInfoIsShowing: false
-      },
-      {
-        title: 'Bourbon Street',
-        location: {lat: 29.9540,lng: -90.0698},
-        venueId: '4c41e11a520fa593d744caac',
-        id:2,
-        foursquareInfoIsShowing: false
-      },
+      // {
+      //   title: 'Bacchanal Fine Wine & Spirits',
+      //   location: {lat: 29.9598,lng: -90.0332},
+      //   venueId: '4adbaabff964a520e62921e3',
+      //   id:1,
+      //   foursquareInfoIsShowing: false
+      // },
+      // {
+      //   title: 'Bourbon Street',
+      //   location: {lat: 29.9540,lng: -90.0698},
+      //   venueId: '4c41e11a520fa593d744caac',
+      //   id:2,
+      //   foursquareInfoIsShowing: false
+      // },
       // {
       //   title: 'Cafe Du Monde',
       //   location: {lat: 29.9574,lng: -90.0618},
@@ -66,6 +67,13 @@ class App extends Component {
 
   componentDidMount = () => {
     this.googleChecker();
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  }
+
+
+  componentWillUnmount = () => {
+    window.addEventListener('resize', this.handleResize);
   }
 
   //code attributed to: https://stackoverflow.com/questions/45429484/how-to-implement-google-maps-js-api-in-react-without-an-external-library
@@ -132,15 +140,15 @@ class App extends Component {
 
    const { locations } = this.state;
     let url1 = `https://api.foursquare.com/v2/venues/${locations[0].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
-    let url2 = `https://api.foursquare.com/v2/venues/${locations[1].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
-    let url3 = `https://api.foursquare.com/v2/venues/${locations[2].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
+    // let url2 = `https://api.foursquare.com/v2/venues/${locations[1].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
+    // let url3 = `https://api.foursquare.com/v2/venues/${locations[2].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
 
     const promise1 = axios.get(url1);
-    const promise2 = axios.get(url2);
-    const promise3 = axios.get(url3);
+    // const promise2 = axios.get(url2);
+    // const promise3 = axios.get(url3);
 
 
-    Promise.all([promise1, promise2, promise3])
+    Promise.all([promise1/*, promise2, promise3*/])
       .then(response => {
         this.setState({
           venues: this.state.venues.concat(response)},
@@ -230,7 +238,15 @@ class App extends Component {
     this.setState({ clickedVenue: clickedVenue })
   }
 
+  handleResize = () => {
+    this.setState({
+      windowSize: window.innerWidth
+    })
+  }
+
   render() {
+
+    console.log(this.state.windowSize)
     return (
       <Fragment>
         <header>
@@ -262,6 +278,7 @@ class App extends Component {
         </div>
         <FSDescription
           clickedVenue={this.state.clickedVenue}
+          windowSize={this.state.windowSize}
         />
         <Footer />
       </Fragment>

@@ -143,8 +143,8 @@ form input {
 
 /*FOURSQUARE COMPONENT*/
 .foursquare-desc {
-  width: 50%;
-  height: 40%;
+  width: 80%;
+  min-width: 330px;
   max-width: 730px;
   background-color: white;
   display: flex;
@@ -153,12 +153,13 @@ form input {
   text-align: center;
   color: black;
   padding: 10px;
-  margin: auto auto 50px auto;
+  margin: 0 auto 50px auto;
   box-shadow: 4px 7px 5px #888888;
 }
 
 .venueImg {
   justify-content: center;
+  height: auto;
 }
 
 /*FOOTER*/
