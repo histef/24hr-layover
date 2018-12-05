@@ -35,34 +35,34 @@ class App extends Component {
         id:1,
         foursquareInfoIsShowing: false
       },
-      {
-        title: 'Bourbon Street',
-        location: {lat: 29.9540,lng: -90.0698},
-        venueId: '4c41e11a520fa593d744caac',
-        id:2,
-        foursquareInfoIsShowing: false
-      },
-      {
-        title: 'Cafe Du Monde',
-        location: {lat: 29.9574,lng: -90.0618},
-        venueId: '4aa59477f964a520dd4820e3',
-        id:3,
-        foursquareInfoIsShowing: false
-      },
-      {
-        title: 'Preservation Hall',
-        location: {lat: 29.9583,lng: -90.0654},
-        venueId: '41326e00f964a520081a1fe3',
-        id:5,
-        foursquareInfoIsShowing: false
-      },
-      {
-        title: 'Shaya',
-        location: {lat: 29.9210,lng: -90.0995},
-        venueId: '547e7d1a498e82531865bd62',
-        id:5,
-        foursquareInfoIsShowing: false
-      },
+      // {
+      //   title: 'Bourbon Street',
+      //   location: {lat: 29.9540,lng: -90.0698},
+      //   venueId: '4c41e11a520fa593d744caac',
+      //   id:2,
+      //   foursquareInfoIsShowing: false
+      // },
+      // {
+      //   title: 'Cafe Du Monde',
+      //   location: {lat: 29.9574,lng: -90.0618},
+      //   venueId: '4aa59477f964a520dd4820e3',
+      //   id:3,
+      //   foursquareInfoIsShowing: false
+      // },
+      // {
+      //   title: 'Preservation Hall',
+      //   location: {lat: 29.9583,lng: -90.0654},
+      //   venueId: '41326e00f964a520081a1fe3',
+      //   id:5,
+      //   foursquareInfoIsShowing: false
+      // },
+      // {
+      //   title: 'Shaya',
+      //   location: {lat: 29.9210,lng: -90.0995},
+      //   venueId: '547e7d1a498e82531865bd62',
+      //   id:5,
+      //   foursquareInfoIsShowing: false
+      // },
     ],
   }
 
@@ -139,23 +139,24 @@ class App extends Component {
   loadVenues = () => {
     let addVenues = [];
 
-   const { locations } = this.state;
+    const { locations } = this.state;
+
     let url1 = `https://api.foursquare.com/v2/venues/${locations[0].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
     let url2 = `https://api.foursquare.com/v2/venues/${locations[1].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
-    let url3 = `https://api.foursquare.com/v2/venues/${locations[2].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
-    let url4 = `https://api.foursquare.com/v2/venues/${locations[3].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
-    let url5 = `https://api.foursquare.com/v2/venues/${locations[4].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
-    let url6 = `https://api.foursquare.com/v2/venues/${locations[5].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
+    // let url3 = `https://api.foursquare.com/v2/venues/${locations[2].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
+    // let url4 = `https://api.foursquare.com/v2/venues/${locations[3].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
+    // let url5 = `https://api.foursquare.com/v2/venues/${locations[4].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
+    // let url6 = `https://api.foursquare.com/v2/venues/${locations[5].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
 
     const promise1 = axios.get(url1);
     const promise2 = axios.get(url2);
-    const promise3 = axios.get(url3);
-    const promise4 = axios.get(url4);
-    const promise5 = axios.get(url5);
-    const promise6 = axios.get(url6);
+    // const promise3 = axios.get(url3);
+    // const promise4 = axios.get(url4);
+    // const promise5 = axios.get(url5);
+    // const promise6 = axios.get(url6);
 
 
-    Promise.all([promise1, promise2, promise3, promise4, promise5, promise6])
+    Promise.all([promise1, promise2/*, promise3, promise4, promise5, promise6*/])
       .then(response => {
         this.setState({
           venues: this.state.venues.concat(response)},
@@ -227,7 +228,7 @@ class App extends Component {
       newVenues = this.state.venues
       //sort this.state.venues so when users not searching anymore, list is still alphabetical
       .sort( (a,b) => a.data.response.venue.name > b.data.response.venue.name)
-      .map(venue=>{
+      .map(venue => {
         if(match.test(venue.data.response.venue.name)){
           return venue;
         } else {
@@ -241,10 +242,16 @@ class App extends Component {
   }
 
   showVenueDesc = (venueId) => {
-    let clickedVenue = this.state.filteredVenues.filter(venue => venue.data.response.venue.id === venueId);
     this.setState({
-      clickedVenue: clickedVenue,
-      listItemClicked: true
+      filteredVenues: this.state.filteredVenues.filter(venue=> venue)
+    },
+    () => {
+      let clickedVenue = this.state.filteredVenues.filter(venue => venue.data.response.venue.id === venueId);
+      // problem is its filtering array where some of the values ===null, so can't check 'data'.response.venue.id...
+      this.setState({
+        clickedVenue: clickedVenue,
+        listItemClicked: true
+      })
     })
   }
 
@@ -259,7 +266,7 @@ class App extends Component {
     return (
       <Fragment>
         <header>
-          <h1 className="title"><span>New Orleans</span><br />Neighborhood Map</h1>
+          <h1 className="title"><span>New Orleans</span><br />Destination Layover</h1>
         </header>
         <div className="wrapper">
           <p className="intro">I went to New Orleans for the first time over the summer. I quickly fell in love with the city. The vibrancy of Bourbon Street, the oh-so-delicious comfort food with a creole twist, and, of course, love that jazz. As such, I want to spread the love, so I have curated a list of tested and approved eateries, venues and sights when visiting this beautiful place. Enjoy!</p>
