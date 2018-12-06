@@ -35,34 +35,34 @@ class App extends Component {
         id:1,
         foursquareInfoIsShowing: false
       },
-      // {
-      //   title: 'Bourbon Street',
-      //   location: {lat: 29.9540,lng: -90.0698},
-      //   venueId: '4c41e11a520fa593d744caac',
-      //   id:2,
-      //   foursquareInfoIsShowing: false
-      // },
-      // {
-      //   title: 'Cafe Du Monde',
-      //   location: {lat: 29.9574,lng: -90.0618},
-      //   venueId: '4aa59477f964a520dd4820e3',
-      //   id:3,
-      //   foursquareInfoIsShowing: false
-      // },
-      // {
-      //   title: 'Preservation Hall',
-      //   location: {lat: 29.9583,lng: -90.0654},
-      //   venueId: '41326e00f964a520081a1fe3',
-      //   id:5,
-      //   foursquareInfoIsShowing: false
-      // },
-      // {
-      //   title: 'Shaya',
-      //   location: {lat: 29.9210,lng: -90.0995},
-      //   venueId: '547e7d1a498e82531865bd62',
-      //   id:5,
-      //   foursquareInfoIsShowing: false
-      // },
+      {
+        title: 'Bourbon Street',
+        location: {lat: 29.9540,lng: -90.0698},
+        venueId: '4c41e11a520fa593d744caac',
+        id:2,
+        foursquareInfoIsShowing: false
+      },
+      {
+        title: 'Cafe Du Monde',
+        location: {lat: 29.9574,lng: -90.0618},
+        venueId: '4aa59477f964a520dd4820e3',
+        id:3,
+        foursquareInfoIsShowing: false
+      },
+      {
+        title: 'Preservation Hall',
+        location: {lat: 29.9583,lng: -90.0654},
+        venueId: '41326e00f964a520081a1fe3',
+        id:5,
+        foursquareInfoIsShowing: false
+      },
+      {
+        title: 'Shaya',
+        location: {lat: 29.9210,lng: -90.0995},
+        venueId: '547e7d1a498e82531865bd62',
+        id:5,
+        foursquareInfoIsShowing: false
+      },
     ],
   }
 
@@ -143,24 +143,23 @@ class App extends Component {
 
     let url1 = `https://api.foursquare.com/v2/venues/${locations[0].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
     let url2 = `https://api.foursquare.com/v2/venues/${locations[1].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
-    // let url3 = `https://api.foursquare.com/v2/venues/${locations[2].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
-    // let url4 = `https://api.foursquare.com/v2/venues/${locations[3].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
-    // let url5 = `https://api.foursquare.com/v2/venues/${locations[4].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
-    // let url6 = `https://api.foursquare.com/v2/venues/${locations[5].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
+    let url3 = `https://api.foursquare.com/v2/venues/${locations[2].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
+    let url4 = `https://api.foursquare.com/v2/venues/${locations[3].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
+    let url5 = `https://api.foursquare.com/v2/venues/${locations[4].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
+    let url6 = `https://api.foursquare.com/v2/venues/${locations[5].venueId}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323&limit=1&near=new_orleans`;
 
     const promise1 = axios.get(url1);
     const promise2 = axios.get(url2);
-    // const promise3 = axios.get(url3);
-    // const promise4 = axios.get(url4);
-    // const promise5 = axios.get(url5);
-    // const promise6 = axios.get(url6);
+    const promise3 = axios.get(url3);
+    const promise4 = axios.get(url4);
+    const promise5 = axios.get(url5);
+    const promise6 = axios.get(url6);
 
 
-    Promise.all([promise1, promise2/*, promise3, promise4, promise5, promise6*/])
+    Promise.all([promise1, promise2, promise3, promise4, promise5, promise6])
       .then(response => {
         this.setState({
           venues: this.state.venues.concat(response)},
-          //sort filteredVenues so initial rendering is sorted alphabetically (could also use promise.all(but if one rejects, they all reject))
           () => { this.setState({ filteredVenues: this.state.venues}) }
         )
       })
@@ -221,7 +220,6 @@ class App extends Component {
 
   // when user is searching find matching this.state.venues, store in filteredVenues
   getLocations = (search) => {
-    //TODO: somehow need to get the é from cafe and 'replace' with e
     let newVenues=[];
     if (search){
       const match = new RegExp(escapeRegExp(search), 'i')

@@ -4,6 +4,7 @@ html, body {
   display:grid;
   background-image: linear-gradient(white 10%, #aca695 50%);
   height: 100%;
+  color: #252628;
 }
 
 
@@ -14,14 +15,15 @@ html, body {
   font-size: 1.3em;
   font-family: 'Montserrat', sans-serif;
   text-align: center;
-  transition: all 1s;
+  transition: all 1s ease-out;
 }
 
 .title:hover {
   border-radius: 50%;
-  border: 1px solid #181f3b;
-  color: #f4f3f1;
-  background-color: #181f3b;
+  border: 1px solid black;
+  color: white;
+  background-image: url('./saxophone.jpeg');
+  background-position: 0 45%;
 }
 
 .title span {
@@ -38,12 +40,6 @@ html, body {
   margin: 0 50px 25px 50px;
   padding: 30px 20px;
   text-align: justify;
-  box-shadow: 7px 10px 20px #888;
-  transition: all 1s;
-}
-
-.intro:hover {
-  box-shadow: none;
 }
 
 /*FILTER-MENU*/
@@ -151,7 +147,6 @@ form input {
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  color: black;
   padding: 10px;
   margin: 0 auto 50px auto;
   box-shadow: 4px 7px 5px #888888;
